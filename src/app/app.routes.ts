@@ -25,4 +25,9 @@ export const routes: Routes = [
         (m) => m.UserListComponent
       ),
   },
+  {
+    path: 'profile',
+    loadComponent: () =>
+      import('./profile/profile.component').then((m) => m.ProfileComponent)
+  },
 ];

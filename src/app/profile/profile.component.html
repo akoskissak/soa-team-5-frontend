@@ -1,0 +1,10 @@
+<div *ngIf="profile" class="profile-info">
+  <div>
+    <img [src]="profile.profilePicture" alt="Profile Photo">
+  </div>
+  <div>
+    <p>{{ profile.firstName }} {{ profile.lastName }}</p>
+    <p><i>Biography:</i> {{ profile.biography }}</p>
+    <p><i>Motto:</i> {{ profile.motto }}</p>
+  </div>
+</div>
