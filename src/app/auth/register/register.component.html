@@ -1,0 +1,14 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="register-form">
+  <h2>Registracija</h2>
+
+  <input formControlName="username" placeholder="Korisničko ime" />
+  <input formControlName="email" type="email" placeholder="Email" />
+  <input formControlName="password" type="password" placeholder="Lozinka" />
+
+  <select formControlName="role">
+    <option value="guide">Vodič</option>
+    <option value="tourist">Turista</option>
+  </select>
+
+  <button type="submit">Registruj se</button>
+</form>

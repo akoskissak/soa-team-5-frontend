@@ -1,0 +1,21 @@
+<div class="user-table">
+  <h2>Lista korisnika</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Korisničko ime</th>
+        <th>Email</th>
+        <th>Uloga</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
