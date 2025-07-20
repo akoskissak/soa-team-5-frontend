@@ -40,3 +40,14 @@
 .user-table tr:last-child td {
   border-bottom: none;
 }
+
+.td-btn {
+  width: 120px;
+  text-align: center;
+}
+
+.td-btn button {
+  width: 100px;
+  text-align: center;
+  display: inline-block;
+}

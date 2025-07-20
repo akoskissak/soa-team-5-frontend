@@ -7,6 +7,7 @@
         <th>Korisničko ime</th>
         <th>Email</th>
         <th>Uloga</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -15,6 +16,12 @@
         <td>{{ user.username }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.role }}</td>
+        <td class="td-btn">
+          <button (click)="toggleBlock(user)"
+            [ngClass]="user.isBlocked ? null : 'btn-red'">
+            {{ user.isBlocked ? 'Unblock' : 'Block' }}
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>

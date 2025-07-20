@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../core/user.service';
 import { User } from '../../shared/models/user.model';
@@ -12,11 +12,26 @@ import { User } from '../../shared/models/user.model';
 export class UserListComponent {
   users: User[] = [];
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.userService.getAllUsers().subscribe((data) => {
       this.users = data;
+      console.log(this.users);
+      
     });
+  }
+
+  toggleBlock(user: User) {
+    this.userService.toggleBlock(user).subscribe((updatedUser: User) => {
+      const index = this.users.findIndex(u => u.id === updatedUser.id);
+      if (index !== -1) {
+        this.users[index].isBlocked = updatedUser.isBlocked;
+      }
+      console.log(updatedUser);  
+      this.cdr.detectChanges();
+    })
   }
 }

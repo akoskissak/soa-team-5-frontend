@@ -12,4 +12,11 @@ export class UserService {
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.api);
   }
+
+  toggleBlock(user: User): Observable<User> {
+    return this.http.put<User>(this.stakeholdersApi + '/admin/block-user', {
+      userId: user.id,
+      block: !user.isBlocked
+    })
+  }
 }
