@@ -1,0 +1,20 @@
+.profile-info {
+  border: 2px solid #3f83f8;
+  border-radius: 8px;
+  padding: 16px;
+  max-width: 500px;
+  margin: 20px auto; /* centers the div horizontally */
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #3f83f8;
+}
