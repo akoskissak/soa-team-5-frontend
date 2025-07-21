@@ -1,0 +1,45 @@
+<div class="blog-create-container">
+  <h2>Kreiraj novi blog post</h2>
+
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="title">Naslov:</label>
+      <input type="text" id="title" [(ngModel)]="newPost.Title" name="title" required>
+      <div *ngIf="titleError" class="error-message">{{ titleError }}</div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Opis (podržava markdown):</label>
+      <textarea id="description" [(ngModel)]="newPost.Description" name="description" rows="10" required></textarea>
+      <div *ngIf="descriptionError" class="error-message">{{ descriptionError }}</div>
+    </div>
+
+     <div class="markdown-preview-container">
+      <h3>Markdown pregled:</h3>
+      <markdown [data]="newPost.Description"></markdown>
+    </div>
+
+    <div class="form-group">
+      <label for="imageUpload">Dodaj slike (opciono):</label>
+      <input type="file" id="imageUpload" multiple accept="image/jpeg,image/png,image/gif" (change)="onImageSelected($event)">
+    </div>
+
+    <div *ngIf="imagePreviews.length > 0" class="image-previews-container">
+      <div *ngFor="let previewUrl of imagePreviews; let i = index" class="image-preview">
+          <img [src]="previewUrl" alt="Preview slike">
+          <button type="button" class="remove-image-btn" (click)="removeImage(i)" title="Ukloni sliku">×</button>
+      </div>
+   </div>
+    <div class="form-actions">
+      <button type="submit" [disabled]="uploadingImages">
+        <span *ngIf="!uploadingImages">Kreiraj post</span>
+        <span *ngIf="uploadingImages">Učitavam slike...</span>
+      </button>
+      <button type="button" (click)="goBackToBlogs()">Nazad na blogove</button>
+    </div>
+
+    <div *ngIf="uploadingImages" class="uploading-indicator">
+        Slike se šalju, molimo sačekajte...
+    </div>
+  </form>
+</div>

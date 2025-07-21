@@ -1,0 +1,225 @@
+.blog-list-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 25px;
+  font-size: 2em;
+  font-weight: 700;
+}
+
+.add-blog-button {
+  display: block;
+  margin: 0 auto 20px auto;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-blog-button:hover {
+  background-color: #0056b3;
+}
+
+.loading-indicator, .error-message, .no-posts-message {
+  text-align: center;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.loading-indicator {
+  background-color: #e6f7ff;
+  color: #0056b3;
+  border: 1px solid #91d5ff;
+}
+
+.error-message {
+  background-color: #ffe6e6;
+  color: #cc0000;
+  border: 1px solid #ff9999;
+}
+
+.no-posts-message {
+  background-color: #f0f0f0;
+  color: #555;
+  border: 1px solid #ccc;
+}
+
+.posts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.post-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease-in-out;
+  min-height: auto;
+  width: 800px;
+  margin: 0 auto;
+}
+
+.post-card:hover {
+  transform: translateY(-5px);
+}
+
+.post-author-top {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.post-card h3 {
+  font-size: 1.8em;
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.post-card p {
+  font-size: 1em;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  flex-grow: 1;
+}
+
+.post-card .post-images {
+  margin-bottom: 20px;
+  height: 250px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-radius: 4px;
+  background-color: white;
+  padding: 8px;
+}
+
+.post-card .post-images .blog-post-image {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.post-footer-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.post-footer-details p {
+    font-size: 0.85em;
+    color: #777;
+    margin: 0;
+}
+
+/* Opšti stilovi za sve elemente unutar Markdown diva */
+.post-card [markdown] {
+  /* Osiguraj da div ima osnovnu visinu i boju teksta */
+  font-size: 1em; /* Bazna veličina fonta */
+  color: #333;   /* Osnovna boja teksta */
+  line-height: 1.6; /* Razmak između linija */
+  margin-bottom: 15px; /* Razmak na dnu celog Markdown bloka */
+  /* Ukloni flex-grow ovde, treba ga postaviti na pojedinačne elemente unutar Markdown diva ako je potrebno */
+}
+
+/* Stilovi za naslove (H1, H2, H3, H4, H5, H6) generisane Markdownom */
+.post-card [markdown] h1 {
+  font-size: 1.8em; /* Prilagodi veličine naslova po želji */
+  color: #333;
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+
+.post-card [markdown] h2 {
+  font-size: 1.5em;
+  color: #444;
+  margin-top: 20px;
+  margin-bottom: 12px;
+}
+
+.post-card [markdown] h3 {
+  font-size: 1.3em;
+  color: #555;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+/* Stilovi za paragrafe unutar Markdown diva */
+.post-card [markdown] p {
+  font-size: 1em; /* Veličina fonta za paragrafe */
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 10px; /* Mali razmak između paragrafa */
+  /* NE STAVLJAJ flex-grow OVDE AKO JE parent markdown div */
+}
+
+/* Stilovi za liste */
+.post-card [markdown] ul,
+.post-card [markdown] ol {
+  margin-left: 25px; /* Uvuci liste */
+  margin-bottom: 15px;
+}
+
+.post-card [markdown] li {
+  margin-bottom: 5px; /* Razmak između stavki liste */
+}
+
+/* Stilovi za bold i italic tekst */
+.post-card [markdown] strong {
+  font-weight: bold;
+}
+
+.post-card [markdown] em {
+  font-style: italic;
+}
+
+/* Stilovi za citate */
+.post-card [markdown] blockquote {
+  border-left: 4px solid #ccc;
+  padding-left: 15px;
+  margin: 15px 0;
+  color: #666;
+  font-style: italic;
+  background-color: #f9f9f9;
+}
+
+/* Stilovi za inline code */
+.post-card [markdown] code {
+  background-color: #eee;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9em;
+}
+
+/* Stilovi za horizontalnu liniju */
+.post-card [markdown] hr {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 20px 0;
+}
