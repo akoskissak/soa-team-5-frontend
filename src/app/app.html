@@ -8,6 +8,7 @@
       >Korisnici</a
       >
       <a *ngIf="isLoggedIn && !isAdmin" routerLink="/profile" routerLinkActive="active">Profile</a>
+      <a *ngIf="isLoggedIn && !isAdmin" routerLink="/blogs" routerLinkActive="active">Blog</a>
       <button *ngIf="isLoggedIn" (click)="logout()" class="logout-button">
         Odjavi se
       </button>
