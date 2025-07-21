@@ -18,3 +18,132 @@
   border-radius: 50%;
   border: 2px solid #3f83f8;
 }
+
+.profile-edit-form {
+  max-width: 600px; 
+  margin: 20px auto; 
+  padding: 20px;
+  background-color: #f8f9fa; 
+  border-radius: 8px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); 
+}
+
+.profile-edit-form h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 1.8em;
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 20px; 
+}
+
+.form-group label {
+  display: block; 
+  margin-bottom: 8px; 
+  font-weight: 600;
+  color: #495057; 
+  font-size: 0.95em;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+  width: calc(100% - 22px); 
+  padding: 12px 10px; 
+  border: 1px solid #ced4da; 
+  border-radius: 4px;
+  font-size: 1em;
+  color: #495057;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075); 
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; 
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+  border-color: #80bdff; 
+  outline: 0; 
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); 
+}
+
+.form-group textarea {
+  resize: vertical; 
+  min-height: 100px;
+}
+
+.form-actions {
+  text-align: right; 
+  margin-top: 30px; 
+}
+
+.form-actions button[type="submit"] {
+  background-color: #007bff; 
+  color: white;
+}
+
+.form-actions button[type="submit"]:hover:not([disabled]) {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.form-actions button[type="button"] {
+  background-color: #6c757d; 
+  color: white;
+}
+
+.form-actions button[type="button"]:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+}
+
+.form-actions button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.error-message {
+  color: #dc3545; 
+  font-size: 0.85em;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+.image-preview {
+  margin-top: 15px;
+  border: 1px solid #ddd;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.image-preview img {
+  max-width: 150px;
+  max-height: 150px; 
+  display: block; 
+  margin: 0 auto; 
+  border-radius: 4px;
+}
+
+.form-text {
+  display: block; 
+  margin-top: 5px;
+  font-size: 0.8em;
+  color: #6c757d;
+}
+
+.profile-name-edit {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 0px; 
+}
+
+.profile-name-edit p {
+    margin: 0; 
+    font-size: 1.2em; 
+}
+.edit-button-wrapper button {
+    margin-left: 150px;
+}

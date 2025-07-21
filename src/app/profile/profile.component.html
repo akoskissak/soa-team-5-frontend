@@ -1,10 +1,59 @@
-<div *ngIf="profile" class="profile-info">
-  <div>
-    <img [src]="profile.profilePicture" alt="Profile Photo">
+<div *ngIf="profile" class="profile-container">
+  <div *ngIf="!editMode" class="profile-info">
+    <div>
+      <img [src]="getAbsoluteImageUrl(profile.profilePicture)" alt="Profile Photo" class="profile-picture">
+    </div>
+   <div class="profile-details">
+    <div class="profile-name-edit"> <p><b>{{ profile.firstName }} {{ profile.lastName }}</b></p>
+        <span class="edit-button-wrapper"> <button (click)="onEdit()">Izmeni</button>
+        </span>
+    </div>
+    <p><i>Biografija:</i> {{ profile.biography }}</p>
+    <p><i>Moto:</i> {{ profile.motto }}</p>
+</div>
   </div>
-  <div>
-    <p>{{ profile.firstName }} {{ profile.lastName }}</p>
-    <p><i>Biography:</i> {{ profile.biography }}</p>
-    <p><i>Motto:</i> {{ profile.motto }}</p>
+
+  <div *ngIf="editMode" class="profile-edit-form">
+    <h2>Izmeni profil</h2>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="firstName">Ime:</label>
+        <input id="firstName" type="text" formControlName="firstName">
+        <div *ngIf="profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched" class="error-message">
+          Ime je obavezno.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Prezime:</label>
+        <input id="lastName" type="text" formControlName="lastName">
+        <div *ngIf="profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched" class="error-message">
+          Prezime je obavezno.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="profilePicture">URL Slike Profila:</label>
+        <input id="profilePicture" type="text" formControlName="profilePicture">
+      </div>
+      <div class="form-group">
+        <label for="fileUpload">Učitaj sliku sa računara:</label>
+        <input type="file" id="fileUpload" (change)="onFileSelected($event)" accept="image/*">
+        <div *ngIf="imagePreviewUrl" class="image-preview">
+          <img [src]="imagePreviewUrl" alt="Image Preview">
+        </div>
+        <small class="form-text text-muted">Ako učitate novu sliku, URL iznad će biti ignorisan.</small>
+      </div>
+      <div class="form-group">
+        <label for="biography">Biografija:</label>
+        <textarea id="biography" formControlName="biography"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="motto">Moto:</label>
+        <input id="motto" type="text" formControlName="motto">
+      </div>
+      <div class="form-actions">
+        <button type="submit" [disabled]="!profileForm.valid">Sačuvaj promene</button>
+        <button type="button" (click)="onCancel()">Poništi</button>
+      </div>
+    </form>
   </div>
 </div>
