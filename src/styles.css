@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --button-color: #3f83f8;
+  --button-red-color: #f83f3f;
+	--white-text-color: #fffafb;
+}
+
+button {
+	background-color: var(--button-color);
+	color: var(--white-text-color);
+	border: none;
+	padding: 15px 20px;
+	border-radius: 25px;
+	cursor: pointer;
+}
+
+.btn-red {
+  background-color: var(--button-red-color);
+}
