@@ -15,4 +15,9 @@ export class ProfileService {
   getProfile(): Observable<Profile> {
     return this.http.get<Profile>(this.profileApi);
   }
+
+  updateProfile(profileData: Profile): Observable<Profile> {
+    return this.http.put<Profile>(this.profileApi, profileData); 
+  }
+  
 }
