@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class UserService {
   private api = 'http://localhost:8080/api/admin/users'; // primer
-
+  private stakeholdersApi = 'http://localhost:8080/api';
   constructor(private http: HttpClient) {}
 
   getAllUsers(): Observable<User[]> {
