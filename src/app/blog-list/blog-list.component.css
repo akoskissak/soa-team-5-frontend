@@ -223,3 +223,86 @@ h2 {
   border-top: 1px solid #e0e0e0;
   margin: 20px 0;
 }
+
+.like-button,
+.comment-button {
+  background-color: #007bff; /* Primer boje, prilagodi svom dizajnu */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease;
+  margin-right: 10px; /* Razmak između dugmadi */
+}
+
+.like-button:hover,
+.comment-button:hover {
+  background-color: #0056b3;
+}
+
+.likes-count {
+  font-weight: bold;
+  color: #333;
+  margin-right: 20px; /* Razmak od dugmeta za komentar */
+}
+
+.comments-section {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.comment-item {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #eee;
+}
+
+.comment-author {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #007bff;
+}
+
+.comment-text {
+  margin-bottom: 5px;
+}
+
+.comment-meta {
+  font-size: 0.8em;
+  color: #888;
+}
+
+.add-comment-form {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-comment-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Važno za padding i width */
+}
+
+.add-comment-form button {
+  align-self: flex-end; /* Dugme ide desno */
+  background-color: #28a745; /* Zeleno dugme za slanje */
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-comment-form button:hover {
+  background-color: #218838;
+}
