@@ -23,6 +23,32 @@
             <p class="created-at">Kreirano: {{ post.CreatedAt | date:'shortDate' }}</p>
             <p class="likes-count">Lajkova: {{ post.LikesCount !== undefined ? post.LikesCount : 0 }}</p>
         </div>
+
+        <div class="post-actions">
+          <button (click)="toggleLike(post.ID)" class="like-button">
+            {{ post.isLikedByUser ? 'Dislike' : 'Like' }}
+          </button>
+          <button (click)="openComments(post.ID)" class="comment-button">
+            Comments
+          </button>
+        </div>
+
+        <div *ngIf="post.showComments" class="comments-section">
+          <div *ngFor="let comment of post.comments" class="comment-item">
+            <p class="comment-author">{{ comment.username }}</p>
+            <p class="comment-text">{{ comment.text }}</p>
+            <p class="comment-meta">
+              {{ comment.createdAt | date:'short' }}
+              <span> (Updated: {{ comment.updatedAt | date:'short' }})</span>
+            </p>
+          </div>
+
+          <div class="add-comment-form">
+          <textarea [(ngModel)]="post.newCommentText" placeholder="Add comment..." rows="3"></textarea>
+          <button (click)="addComment(post)">Share comment</button>
+        </div>
+        </div>
+
       </div>
     </div>
     <div *ngIf="posts.length === 0" class="no-posts-message">

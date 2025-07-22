@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Post } from '../shared/models/post.model';
+import { Comment } from '../shared/models/comment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,18 @@ export class BlogService {
       .pipe(
         map(response => response.imageUrl) 
       );
+  }
+
+  toggleLike(postId: string, userId: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/${postId}/like`, { userId: userId }); 
+  }
+
+  getCommentsForPost(postId: string): Observable<Comment[]> {
+    return this.http.get<Comment[]>(`${this.apiUrl}/${postId}/comments`);
+  }
+
+  addComment(postId: string, text: string, userId: string, username: string): Observable<Comment> {
+    return this.http.post<Comment>(`${this.apiUrl}/${postId}/comments`, { text, userId, username });
   }
   
 }
