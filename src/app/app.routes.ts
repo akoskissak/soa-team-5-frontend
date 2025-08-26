@@ -28,16 +28,25 @@ export const routes: Routes = [
   {
     path: 'profile',
     loadComponent: () =>
-      import('./profile/profile.component').then((m) => m.ProfileComponent)
+      import('./profile/profile.component').then((m) => m.ProfileComponent),
   },
   {
-    path: 'create-blog', 
+    path: 'profile/:username',
     loadComponent: () =>
-      import('./blog-create/blog-create.component').then((m) => m.BlogCreateComponent),
+      import('./profile/profile.component').then((m) => m.ProfileComponent),
   },
   {
-    path: 'blogs', 
+    path: 'create-blog',
     loadComponent: () =>
-      import('./blog-list/blog-list.component').then((m) => m.BlogListComponent),
+      import('./blog-create/blog-create.component').then(
+        (m) => m.BlogCreateComponent
+      ),
+  },
+  {
+    path: 'blogs',
+    loadComponent: () =>
+      import('./blog-list/blog-list.component').then(
+        (m) => m.BlogListComponent
+      ),
   },
 ];

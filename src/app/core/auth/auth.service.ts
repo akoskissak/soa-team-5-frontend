@@ -5,7 +5,7 @@ import { BehaviorSubject, tap } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly TOKEN_KEY = 'jwt_token';
-  private readonly API_URL = 'http://localhost:8080/api/auth'; // prilagodi
+  private readonly API_URL = 'http://localhost:8080/api/auth';
 
   private roleSubject = new BehaviorSubject<string | null>(this.getUserRole());
   role$ = this.roleSubject.asObservable();
@@ -62,6 +62,19 @@ export class AuthService {
 
   setUserRoleFromToken() {
     this.roleSubject.next(this.getUserRole());
+  }
+
+  getUsername(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.username || null;
+    } catch (err) {
+      console.error('Failed to decode JWT for username', err);
+      return null;
+    }
   }
 
   clearRole() {
