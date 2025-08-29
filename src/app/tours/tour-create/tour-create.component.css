@@ -1,0 +1,103 @@
+.main-container {
+  max-width: 1200px;
+  margin: 10px auto;
+  padding: 20px 30px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.main-container h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.container {
+  display: flex;
+  gap: 20px;
+}
+
+.create-tour-container,
+.keypoints-container {
+  flex: 1;
+  /* background: #fff; */
+  padding: 20px 30px;
+  /* border-radius: 12px; */
+  /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); */
+}
+
+.container label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+  color: #444;
+}
+
+.container input[type="text"],
+.container textarea,
+.container select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.container textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.container button {
+  margin-top: 20px;
+  padding: 10px 15px;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.container button:hover {
+  background: #0056b3;
+}
+
+#tagsList, #keypointsList {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#tagsList li, #keypointsList li {
+  background: #f1f1f1;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+}
+
+#tagsList li span, #keypointsList li span {
+  margin-left: 8px;
+  color: red;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-submit {
+  display: block;
+  margin: 30px auto 0 auto; /* centers horizontally */
+  padding: 12px 24px;
+  border: none;
+  border-radius: 16px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}

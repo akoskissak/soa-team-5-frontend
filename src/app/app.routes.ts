@@ -49,4 +49,18 @@ export const routes: Routes = [
         (m) => m.BlogListComponent
       ),
   },
+  {
+    path: 'create-tour',
+    loadComponent: () =>
+      import('./tours/tour-create/tour-create.component').then(
+        (m) => m.TourCreateComponent
+      )
+  },
+  {
+    path: 'tours',
+    loadComponent: () =>
+      import('./tours/my-tours/my-tours.component').then(
+        (m) => m.MyToursComponent
+      )
+  }
 ];
