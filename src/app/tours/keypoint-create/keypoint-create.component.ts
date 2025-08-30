@@ -77,6 +77,11 @@ export class KeypointCreateComponent implements AfterViewInit {
       return;
     }
 
+    if (!this.kpName || !this.kpDescription || !this.kpImage) {
+      alert("Keypoint name, description and image are required");
+      return;
+    }
+
     const kp: Keypoint = {
       name: this.kpName,
       description: this.kpDescription,
