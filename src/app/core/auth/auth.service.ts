@@ -80,4 +80,18 @@ export class AuthService {
   clearRole() {
     this.roleSubject.next(null);
   }
+
+  getUserId(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      console.log(payload.userId);
+      return payload.userId || null;
+    } catch (err) {
+      console.error('Failed to decode JWT for userId', err);
+      return null;
+    }
+  }
 }

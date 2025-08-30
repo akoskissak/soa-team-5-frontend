@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
   styleUrl: './app.css',
 })
 export class App {
+  isGuide = false;
   isAdmin = false;
   isLoggedIn = false;
   private sub?: Subscription;
@@ -22,6 +23,7 @@ export class App {
   ngOnInit() {
     this.sub = this.authService.role$.subscribe((role) => {
       this.isAdmin = role === 'admin';
+      this.isGuide = role === 'guide';
       this.isLoggedIn = !!role;
     });
   }

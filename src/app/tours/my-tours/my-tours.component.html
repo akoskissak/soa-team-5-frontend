@@ -1,0 +1,36 @@
+<h1 class="page-header">My tours</h1>
+
+<div class="grid">
+  @for (tour of tours; track $index) {
+  <article class="card">
+      <header class="card-header">
+        <h3 class="title" [title]="tour.name">{{ tour.name }}</h3>
+        <span [ngClass]="statusClass(tour.status)" class="badge">
+          {{ tour.status }}
+        </span>
+      </header>
+      
+      <p class="desc">
+        {{ tour.description }}
+      </p>
+  
+      <div class="meta">
+        <span [ngClass]="difficultyClass(tour.difficulty)">
+          {{ tour.difficulty }}
+        </span>
+  
+        <span class="price" [class.free]="tour.price === 0">
+          {{ tour.price === 0 ? '0' : (tour.price | number : '1.0-2') }} RSD
+        </span>
+      </div>
+      
+      @if (tour.tags.length) {
+        <div class="tags">
+          @for (tag of tour.tags; track $index) {
+            <span class="tag">#{{ tag }}</span>
+          }
+        </div>
+      }
+    </article>
+    }
+</div>

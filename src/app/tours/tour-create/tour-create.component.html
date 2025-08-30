@@ -1,0 +1,65 @@
+<div class="main-container">
+  <h1>Create Tour</h1>
+  <div class="container">
+    <div class="create-tour-container">
+    
+      <form id="tourForm" (ngSubmit)="submitForm()" #tourForm="ngForm">
+        <label for="name">Name</label>
+        <input type="text" id="name" [(ngModel)]="name" name="name" required />
+    
+        <label for="description">Description</label>
+        <textarea id="description" [(ngModel)]="description" name="description" required></textarea>
+    
+        <label for="difficulty">Difficulty</label>
+        <select id="difficulty" [(ngModel)]="difficulty" name="difficulty" required>
+          <option [value]="'Easy'">Easy</option>
+          <option [value]="'Medium'">Medium</option>
+          <option [value]="'Hard'">Hard</option>
+        </select>
+    
+        <label for="tagInput">Tags</label>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <input type="text" id="tagInput" [(ngModel)]="newTag" name="newTag" />
+          <button type="button" (click)="addTag()">Add</button>
+        </div>
+    
+        <ul id="tagsList">
+          @for (tag of tags; track $index) {
+            <li>
+              {{ tag }} <span (click)="removeTag(tag)">×</span>
+            </li>
+          }
+        </ul>
+
+        <label>Keypoints (optional)</label>
+        <ul id="keypointsList">
+          @for (kp of keypoints; track $index) {
+            <li>
+              {{ kp.name }} ({{ kp.latitude.toFixed(4) }}, {{ kp.longitude.toFixed(4) }}) <span (click)="removeKeypoint(kp)">×</span>
+            </li>
+          }
+        </ul>
+      </form>
+    </div>
+
+    <div class="keypoints-container">
+      <app-keypoint-create
+        [keypoints]="keypoints"
+        [removeRequests]="removeRequests">
+      </app-keypoint-create>
+    </div>
+  </div>
+
+  <button class="btn-submit" type="submit" form="tourForm">Create Tour</button>
+</div>
+
+<div class="created-modal" [ngClass]="{'show': isModalOpen}">
+  <div class="created-modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <div class="modal-body">
+      <img src="images/success.png" alt="Success">
+      <p>You successfully created a tour</p>
+      <button class="btn" (click)="closeModal()">Continue</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div>
+  <h2 class="keypoint-header">Keypoints</h2>
+  <div id="map" style="height: 400px; margin-bottom: 20px;"></div>
+
+  <form (ngSubmit)="saveKeypoint(fileInput)">
+    <label>Name</label>
+    <input type="text" [(ngModel)]="kpName" name="kpName" required />
+
+    <label>Description</label>
+    <textarea [(ngModel)]="kpDescription" name="kpDescription" required></textarea>
+
+    <label>Image</label>
+    <input type="file" #fileInput (change)="onImageSelected($event)" />
+
+    <button type="submit">Add keypoint</button>
+  </form>
+</div>

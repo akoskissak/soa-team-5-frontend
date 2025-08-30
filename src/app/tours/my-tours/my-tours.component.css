@@ -1,0 +1,136 @@
+:host {
+  display: block;
+  padding: 16px;
+  color: #0f172a; /* slate-900 */
+  background: #f8fafc; /* slate-50 */
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+.page-header {
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.06);
+}
+
+.card-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  flex: 1;
+}
+
+.desc {
+  margin: 0;
+  color: #475569; /* slate-600 */
+  font-size: 14px;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.price {
+  font-weight: 700;
+}
+
+.price.free {
+  opacity: 0.5;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1;
+  border: 1px solid transparent;
+  text-transform: capitalize;
+}
+
+.badge-draft {
+  /* background: #fff7ed;   /* orange-50 */
+  color: #9a3412;        /* orange-800 */
+  /* border-color: #fdba74; /* orange-300 */
+}
+
+.badge-published {
+  /* background: #ecfdf5;   /* emerald-50 */
+  color: #065f46;        /* emerald-800 */
+  /* border-color: #6ee7b7; /* emerald-300 */
+}
+
+.badge-archived {
+  /* background: #f1f5f9;   /* slate-100 */
+  color: #334155;        /* slate-700 */
+  /* border-color: #cbd5e1; /* slate-300 */
+}
+
+.chip {
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  border: 1px solid transparent;
+  font-weight: 600;
+}
+
+.chip-easy {
+  background: #eff6ff;   /* blue-50 */
+  border-color: #bfdbfe; /* blue-200 */
+  color: #1e3a8a;        /* blue-900 */
+}
+
+.chip-medium {
+  background: #fef9c3;   /* yellow-100 */
+  border-color: #fde68a; /* yellow-300 */
+  color: #713f12;        /* yellow-900 */
+}
+
+.chip-hard {
+  background: #fee2e2;   /* red-100 */
+  border-color: #fecaca; /* red-200 */
+  color: #7f1d1d;        /* red-900 */
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  font-size: 12px;
+  padding: 3px 8px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+}
