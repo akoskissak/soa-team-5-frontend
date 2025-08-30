@@ -24,6 +24,8 @@ export class TourCreateComponent {
   keypoints: Keypoint[] = [];
   removeRequests = new Subject<Keypoint>();
 
+  isModalOpen = false;
+
   constructor(private http: HttpClient,
     private tourService: TourService
   ) {}
@@ -67,14 +69,33 @@ export class TourCreateComponent {
     this.tourService.createTour(formData).subscribe({
       next: (res) => {
         console.log(res);
+        this.isModalOpen = true;
       },
       error: (err) => {
-        console.error(err.message);
+        console.error(err.error.error);
+        alert(err.error.error);
       }
     });
   }
 
   onKeypointsDone(points: any[]) {
     this.keypoints = points;
+  }
+
+  closeModal() {
+    this.resetFields();
+    this.isModalOpen = false;
+  }
+
+  resetFields() {
+    this.name = '';
+    this.description = '';
+    this.difficulty = 'Easy';
+    this.tags = [];
+    this.newTag = '';
+    this.keypoints.forEach(kp => {
+      this.removeRequests.next(kp);
+    });
+    this.keypoints = [];
   }
 }

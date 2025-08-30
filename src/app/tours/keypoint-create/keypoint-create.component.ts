@@ -17,7 +17,7 @@ export class KeypointCreateComponent implements AfterViewInit {
 
   kpName = '';
   kpDescription = '';
-  kpImage: File | undefined;
+  kpImage: File | null = null;
   private map!: L.Map;
   private selectedLatLng: L.LatLng | null = null;
   private currentMarker: L.Marker | null = null;
@@ -71,7 +71,7 @@ export class KeypointCreateComponent implements AfterViewInit {
     this.kpImage = event.target.files[0];
   }
 
-  saveKeypoint() {
+  saveKeypoint(fileInput: HTMLInputElement) {
     if (!this.selectedLatLng) {
       alert("Click on the map to choose a location!");
       return;
@@ -96,9 +96,11 @@ export class KeypointCreateComponent implements AfterViewInit {
 
     this.kpName = '';
     this.kpDescription = '';
-    this.kpImage = undefined;
+    this.kpImage = null;
     this.selectedLatLng = null;
     this.currentMarker = null;
+
+    fileInput.value = '';
   }
 
   private getKey(kp: Keypoint) {

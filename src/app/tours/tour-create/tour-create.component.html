@@ -31,7 +31,7 @@
           }
         </ul>
 
-        <label>Keypoints</label>
+        <label>Keypoints (optional)</label>
         <ul id="keypointsList">
           @for (kp of keypoints; track $index) {
             <li>
@@ -51,4 +51,15 @@
   </div>
 
   <button class="btn-submit" type="submit" form="tourForm">Create Tour</button>
+</div>
+
+<div class="created-modal" [ngClass]="{'show': isModalOpen}">
+  <div class="created-modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <div class="modal-body">
+      <img src="images/success.png" alt="Success">
+      <p>You successfully created a tour</p>
+      <button class="btn" (click)="closeModal()">Continue</button>
+    </div>
+  </div>
 </div>
