@@ -110,21 +110,18 @@ export class BlogListComponent implements OnInit {
     }
   }
 
-   addComment(post: Post): void { // <-- Sad prima CEO post objekat
+   addComment(post: Post): void {
     if (post.ID === undefined) {
       console.error('Cannot add comment: Post ID is undefined.');
       return;
     }
 
-    const commentText = post.newCommentText || ''; // <-- Uzmi tekst iz post objekta
+    const commentText = post.newCommentText || ''; 
     if (!commentText.trim()) {
       alert('Komentar ne može biti prazan!');
       return;
     }
 
-    // Post objekat je već pronađen, jer je prosleđen
-    // const post = this.posts.find(p => p.ID === postId); // Ova linija vise ne treba
-    // if (!post) { console.error('Post not found for ID:', postId); return; } // Ova provera vise ne treba
 
     if (!this.currentUserId || !this.currentUsername) {
       alert('Niste prijavljeni. Molimo prijavite se da biste komentarisali.');
@@ -138,7 +135,7 @@ export class BlogListComponent implements OnInit {
         }
         post.comments.push(newComment);
         post.CommentsCount = (post.CommentsCount || 0) + 1;
-        post.newCommentText = ''; // <-- RESETUJ TEKST SAMO ZA TAJ POST
+        post.newCommentText = ''; 
         console.log('Komentar uspešno dodat:', newComment);
       },
       error: (err) => {
