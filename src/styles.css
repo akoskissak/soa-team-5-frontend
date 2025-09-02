@@ -13,6 +13,10 @@ button {
 	cursor: pointer;
 }
 
+button:hover {
+	background: #0063cb;
+}
+
 .btn-red {
   background-color: var(--button-red-color);
 }

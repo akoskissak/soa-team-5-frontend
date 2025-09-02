@@ -1,7 +1,9 @@
 <div class="blog-list-container">
   <h2>Prikaz svih blogova</h2>
 
-  <button (click)="goToCreateBlog()" class="add-blog-button">Dodaj novi blog</button>
+  <button (click)="goToCreateBlog()" class="add-blog-button">
+    Dodaj novi blog
+  </button>
 
   <div *ngIf="loading" class="loading-indicator">Učitavanje blogova...</div>
   <div *ngIf="error" class="error-message">{{ error }}</div>
@@ -9,19 +11,32 @@
   <div *ngIf="!loading && !error">
     <div *ngIf="posts.length > 0" class="posts-grid">
       <div *ngFor="let post of posts" class="post-card">
-        <p class="post-author-top">{{ post.Username }}</p>
+        <p class="post-author-top">
+          <a [routerLink]="['/profile', post.Username]" class="profile-link">
+            {{ post.Username }}
+          </a>
+        </p>
         <h3>{{ post.Title }}</h3>
-<markdown [data]="post.Description"></markdown>
-        <div *ngIf="post.imageURLs && post.imageURLs.length > 0" class="post-images">
-          <img *ngFor="let imageUrl of post.imageURLs"
-               [src]="'http://localhost:8081' + imageUrl"
-               alt="Blog image"
-               class="blog-post-image">
+        <markdown [data]="post.Description"></markdown>
+        <div
+          *ngIf="post.imageURLs && post.imageURLs.length > 0"
+          class="post-images"
+        >
+          <img
+            *ngFor="let imageUrl of post.imageURLs"
+            [src]="'http://localhost:8081' + imageUrl"
+            alt="Blog image"
+            class="blog-post-image"
+          />
         </div>
 
         <div class="post-footer-details">
-            <p class="created-at">Kreirano: {{ post.CreatedAt | date:'shortDate' }}</p>
-            <p class="likes-count">Lajkova: {{ post.LikesCount !== undefined ? post.LikesCount : 0 }}</p>
+          <p class="created-at">
+            Kreirano: {{ post.CreatedAt | date : "shortDate" }}
+          </p>
+          <p class="likes-count">
+            Lajkova: {{ post.LikesCount !== undefined ? post.LikesCount : 0 }}
+          </p>
         </div>
 
         <div class="post-actions">

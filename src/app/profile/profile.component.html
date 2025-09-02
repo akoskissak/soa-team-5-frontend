@@ -1,16 +1,84 @@
-<div *ngIf="profile" class="profile-container">
+<div *ngIf="errorMessage" class="error-message">⚠️ {{ errorMessage }}</div>
+
+<div *ngIf="profile && !errorMessage" class="profile-container">
   <div *ngIf="!editMode" class="profile-info">
     <div>
-      <img [src]="getAbsoluteImageUrl(profile.profilePicture)" alt="Profile Photo" class="profile-picture">
+      <img
+        [src]="getAbsoluteImageUrl(profile.profilePicture)"
+        alt="Profile Photo"
+        class="profile-picture"
+      />
     </div>
-   <div class="profile-details">
-    <div class="profile-name-edit"> <p><b>{{ profile.firstName }} {{ profile.lastName }}</b></p>
-        <span class="edit-button-wrapper"> <button (click)="onEdit()">Izmeni</button>
+    <div class="profile-details">
+      <div class="profile-name-edit">
+        <p>
+          <b>{{ profile.firstName }} {{ profile.lastName }}</b>
+        </p>
+        <span class="edit-button-wrapper" *ngIf="!isOwner()">
+          <button (click)="toggleFollow(loggedInUsername)">
+            {{ isFollowing(loggedInUsername) ? "Unfollow" : "Follow" }}
+          </button>
         </span>
+        <span class="edit-button-wrapper" *ngIf="isOwner()">
+          <button (click)="onEdit()">Izmeni</button>
+        </span>
+      </div>
+      <p><i>Biografija:</i> {{ profile.biography }}</p>
+      <p><i>Moto:</i> {{ profile.motto }}</p>
+
+      <div class="followers-following">
+        <span
+          (click)="toggleFollowers()"
+          [class.active]="showFollowers"
+          style="cursor: pointer"
+        >
+          <b>{{ followers.length }}</b> Followers
+        </span>
+        |
+        <span
+          (click)="toggleFollowing()"
+          [class.active]="showFollowing"
+          style="cursor: pointer"
+        >
+          <b>{{ following.length }}</b> Following
+        </span>
+      </div>
+
+      <div *ngIf="showFollowers" class="followers-list">
+        <p
+          *ngFor="let username of followers"
+          [routerLink]="['/profile', username]"
+        >
+          <a class="profile-link">
+            {{ username }}
+          </a>
+        </p>
+      </div>
+
+      <div *ngIf="showFollowing" class="following-list">
+        <p
+          *ngFor="let username of following"
+          [routerLink]="['/profile', username]"
+        >
+          <a class="profile-link">
+            {{ username }}
+          </a>
+        </p>
+      </div>
     </div>
-    <p><i>Biografija:</i> {{ profile.biography }}</p>
-    <p><i>Moto:</i> {{ profile.motto }}</p>
-</div>
+  </div>
+
+  <!-- recommend -->
+  <div
+    *ngIf="!isOwner() && recommendedUsers.length > 0"
+    class="recommendations"
+  >
+    <h3>People you might want to follow</h3>
+    <div *ngFor="let user of recommendedUsers" class="recommendation-item">
+      <a [routerLink]="['/profile', user.username]" class="profile-link">
+        {{ user.username }}
+      </a>
+    </div>
   </div>
 
   <div *ngIf="editMode" class="profile-edit-form">
@@ -18,29 +86,52 @@
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="firstName">Ime:</label>
-        <input id="firstName" type="text" formControlName="firstName">
-        <div *ngIf="profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched" class="error-message">
+        <input id="firstName" type="text" formControlName="firstName" />
+        <div
+          *ngIf="
+            profileForm.get('firstName')?.invalid &&
+            profileForm.get('firstName')?.touched
+          "
+          class="error-message"
+        >
           Ime je obavezno.
         </div>
       </div>
       <div class="form-group">
         <label for="lastName">Prezime:</label>
-        <input id="lastName" type="text" formControlName="lastName">
-        <div *ngIf="profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched" class="error-message">
+        <input id="lastName" type="text" formControlName="lastName" />
+        <div
+          *ngIf="
+            profileForm.get('lastName')?.invalid &&
+            profileForm.get('lastName')?.touched
+          "
+          class="error-message"
+        >
           Prezime je obavezno.
         </div>
       </div>
       <div class="form-group">
         <label for="profilePicture">URL Slike Profila:</label>
-        <input id="profilePicture" type="text" formControlName="profilePicture">
+        <input
+          id="profilePicture"
+          type="text"
+          formControlName="profilePicture"
+        />
       </div>
       <div class="form-group">
         <label for="fileUpload">Učitaj sliku sa računara:</label>
-        <input type="file" id="fileUpload" (change)="onFileSelected($event)" accept="image/*">
+        <input
+          type="file"
+          id="fileUpload"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+        />
         <div *ngIf="imagePreviewUrl" class="image-preview">
-          <img [src]="imagePreviewUrl" alt="Image Preview">
+          <img [src]="imagePreviewUrl" alt="Image Preview" />
         </div>
-        <small class="form-text text-muted">Ako učitate novu sliku, URL iznad će biti ignorisan.</small>
+        <small class="form-text text-muted"
+          >Ako učitate novu sliku, URL iznad će biti ignorisan.</small
+        >
       </div>
       <div class="form-group">
         <label for="biography">Biografija:</label>
@@ -48,10 +139,12 @@
       </div>
       <div class="form-group">
         <label for="motto">Moto:</label>
-        <input id="motto" type="text" formControlName="motto">
+        <input id="motto" type="text" formControlName="motto" />
       </div>
       <div class="form-actions">
-        <button type="submit" [disabled]="!profileForm.valid">Sačuvaj promene</button>
+        <button type="submit" [disabled]="!profileForm.valid">
+          Sačuvaj promene
+        </button>
         <button type="button" (click)="onCancel()">Poništi</button>
       </div>
     </form>

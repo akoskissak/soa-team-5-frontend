@@ -19,13 +19,25 @@
   border: 2px solid #3f83f8;
 }
 
+.profile-link {
+  color: #2563eb;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.profile-link:hover {
+  color: #1e40af;
+  text-decoration: underline;
+}
+
 .profile-edit-form {
-  max-width: 600px; 
-  margin: 20px auto; 
+  max-width: 600px;
+  margin: 20px auto;
   padding: 20px;
-  background-color: #f8f9fa; 
+  background-color: #f8f9fa;
   border-radius: 8px;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); 
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .profile-edit-form h2 {
@@ -37,48 +49,48 @@
 }
 
 .form-group {
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .form-group label {
-  display: block; 
-  margin-bottom: 8px; 
+  display: block;
+  margin-bottom: 8px;
   font-weight: 600;
-  color: #495057; 
+  color: #495057;
   font-size: 0.95em;
 }
 
 .form-group input[type="text"],
 .form-group textarea {
-  width: calc(100% - 22px); 
-  padding: 12px 10px; 
-  border: 1px solid #ced4da; 
+  width: calc(100% - 22px);
+  padding: 12px 10px;
+  border: 1px solid #ced4da;
   border-radius: 4px;
   font-size: 1em;
   color: #495057;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075); 
-  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; 
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .form-group input[type="text"]:focus,
 .form-group textarea:focus {
-  border-color: #80bdff; 
-  outline: 0; 
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); 
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 .form-group textarea {
-  resize: vertical; 
+  resize: vertical;
   min-height: 100px;
 }
 
 .form-actions {
-  text-align: right; 
-  margin-top: 30px; 
+  text-align: right;
+  margin-top: 30px;
 }
 
 .form-actions button[type="submit"] {
-  background-color: #007bff; 
+  background-color: #007bff;
   color: white;
 }
 
@@ -88,7 +100,7 @@
 }
 
 .form-actions button[type="button"] {
-  background-color: #6c757d; 
+  background-color: #6c757d;
   color: white;
 }
 
@@ -104,7 +116,7 @@
 }
 
 .error-message {
-  color: #dc3545; 
+  color: #dc3545;
   font-size: 0.85em;
   margin-top: 5px;
   font-weight: 500;
@@ -120,30 +132,152 @@
 
 .image-preview img {
   max-width: 150px;
-  max-height: 150px; 
-  display: block; 
-  margin: 0 auto; 
+  max-height: 150px;
+  display: block;
+  margin: 0 auto;
   border-radius: 4px;
 }
 
 .form-text {
-  display: block; 
+  display: block;
   margin-top: 5px;
   font-size: 0.8em;
   color: #6c757d;
 }
 
 .profile-name-edit {
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    margin-bottom: 0px; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0px;
 }
 
 .profile-name-edit p {
-    margin: 0; 
-    font-size: 1.2em; 
+  margin: 0;
+  font-size: 1.2em;
 }
 .edit-button-wrapper button {
-    margin-left: 150px;
+  margin-left: 100px;
+}
+
+.followers-following {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.followers-following span {
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background 0.3s, color 0.3s;
+  cursor: pointer;
+  color: #3897f0;
+}
+
+.followers-following span.active {
+  background-color: #258eff;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.3);
+}
+
+.followers-following span:hover {
+  background-color: #e6f0ff;
+}
+
+.followers-list,
+.following-list {
+  margin-top: 10px;
+  padding-left: 0;
+  list-style: none;
+  max-height: 200px;
+  overflow-y: auto;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+  background-color: #fafafa;
+  border-radius: 6px;
+}
+
+.followers-list p,
+.following-list p {
+  margin: 5px 10px;
+  cursor: pointer;
+  color: #333;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.followers-list p:hover,
+.following-list p:hover {
+  background-color: #e6f0ff;
+}
+
+.error-message {
+  color: #d9534f;
+  background: #f9d6d5;
+  border: 1px solid #d9534f;
+  padding: 10px;
+  margin: 15px 0;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.recommendations {
+  max-width: 400px;
+  margin: 30px auto;
+  padding: 20px;
+  border-radius: 12px;
+  background: #f9fafb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.recommendations h3 {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  color: #333;
+  font-weight: 600;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 6px;
+}
+
+.recommendation-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.recommendation-item:last-child {
+  border-bottom: none;
+}
+
+.recommendation-item span {
+  font-size: 1rem;
+  color: #111827;
+  font-weight: 500;
+}
+
+.recommendation-item button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.recommendation-item button:hover:not(:disabled) {
+  background-color: #1e40af;
+  transform: translateY(-1px);
+}
+
+.recommendation-item button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
 }

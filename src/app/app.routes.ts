@@ -28,16 +28,39 @@ export const routes: Routes = [
   {
     path: 'profile',
     loadComponent: () =>
-      import('./profile/profile.component').then((m) => m.ProfileComponent)
+      import('./profile/profile.component').then((m) => m.ProfileComponent),
   },
   {
-    path: 'create-blog', 
+    path: 'profile/:username',
     loadComponent: () =>
-      import('./blog-create/blog-create.component').then((m) => m.BlogCreateComponent),
+      import('./profile/profile.component').then((m) => m.ProfileComponent),
   },
   {
-    path: 'blogs', 
+    path: 'create-blog',
     loadComponent: () =>
-      import('./blog-list/blog-list.component').then((m) => m.BlogListComponent),
+      import('./blog-create/blog-create.component').then(
+        (m) => m.BlogCreateComponent
+      ),
   },
+  {
+    path: 'blogs',
+    loadComponent: () =>
+      import('./blog-list/blog-list.component').then(
+        (m) => m.BlogListComponent
+      ),
+  },
+  {
+    path: 'create-tour',
+    loadComponent: () =>
+      import('./tours/tour-create/tour-create.component').then(
+        (m) => m.TourCreateComponent
+      )
+  },
+  {
+    path: 'tours',
+    loadComponent: () =>
+      import('./tours/my-tours/my-tours.component').then(
+        (m) => m.MyToursComponent
+      )
+  }
 ];
