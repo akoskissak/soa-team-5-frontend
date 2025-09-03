@@ -7,7 +7,7 @@ import { Tour } from '../shared/models/tour.model';
   providedIn: 'root'
 })
 export class TourService {
-  private apiUrl = 'http://localhost:8083/api/tours'
+  private apiUrl = 'http://localhost:8080/api/tours'
 
   constructor(private http: HttpClient) { }
 
