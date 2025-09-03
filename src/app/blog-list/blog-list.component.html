@@ -12,38 +12,38 @@
     <div *ngIf="posts.length > 0" class="posts-grid">
       <div *ngFor="let post of posts" class="post-card">
         <p class="post-author-top">
-          <a [routerLink]="['/profile', post.Username]" class="profile-link">
-            {{ post.Username }}
+          <a [routerLink]="['/profile', post.username]" class="profile-link">
+            {{ post.username }}
           </a>
         </p>
-        <h3>{{ post.Title }}</h3>
-        <markdown [data]="post.Description"></markdown>
+        <h3>{{ post.title }}</h3>
+        <markdown [data]="post.description"></markdown>
         <div
-          *ngIf="post.imageURLs && post.imageURLs.length > 0"
+          *ngIf="post.imageUrls && post.imageUrls.length > 0"
           class="post-images"
         >
-          <img
-            *ngFor="let imageUrl of post.imageURLs"
-            [src]="'http://localhost:8081' + imageUrl"
-            alt="Blog image"
-            class="blog-post-image"
-          />
-        </div>
+              <img
+            *ngFor="let imageUrl of post.imageUrls"
+            [src]="getAbsoluteImageUrl(imageUrl)"
+            alt="Blog image"
+            class="blog-post-image"
+          />
+        </div>
 
         <div class="post-footer-details">
           <p class="created-at">
-            Kreirano: {{ post.CreatedAt | date : "shortDate" }}
+            Kreirano: {{ post.createdAt | date : "shortDate" }}
           </p>
           <p class="likes-count">
-            Lajkova: {{ post.LikesCount !== undefined ? post.LikesCount : 0 }}
+            Lajkova: {{ post.likesCount !== undefined ? post.likesCount : 0 }}
           </p>
         </div>
 
         <div class="post-actions">
-          <button (click)="toggleLike(post.ID)" class="like-button">
+          <button (click)="toggleLike(post.id)" class="like-button">
             {{ post.isLikedByUser ? 'Dislike' : 'Like' }}
           </button>
-          <button (click)="openComments(post.ID)" class="comment-button">
+          <button (click)="openComments(post.id)" class="comment-button">
             Comments
           </button>
         </div>

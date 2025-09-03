@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { MarkdownModule } from 'ngx-markdown';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../core/auth/auth.service';
 
 @Component({
   selector: 'app-blog-list',
@@ -27,28 +28,43 @@ export class BlogListComponent implements OnInit {
   loading: boolean = true;
   error: string | null = null;
 
-  currentUserId: string = '00000000-0000-0000-0000-000000000001';
-  currentUsername: string = 'janci';
+  currentUserId: string | null = '';
+  currentUsername: string | null = '';
 
-  constructor(private blogService: BlogService, private router: Router) {}
+  private backendBaseUrl = 'http://localhost:8086';
+
+  constructor(private blogService: BlogService, private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.getPosts();
+    this.currentUserId = this.authService.getUserId();
+    this.currentUsername = this.authService.getUsername();
+
   }
 
   getPosts(): void {
     this.loading = true;
     this.error = null;
     this.blogService.getPosts().subscribe({
-      next: (data: Post[]) => {
-        this.posts = data.map((post) => ({
-          ...post,
-          isLikedByUser: false,
-          CommentsCount: post.CommentsCount || 0,
-          showComments: false,
-          comments: [],
-          newCommentText: '',
-        }));
+      next: (response: any) => {
+        // Pristupite "posts" polju unutar primljenog objekta
+        const receivedPosts = response.posts;
+
+        // Proverite da li je "posts" polje niz i obradite ga
+        if (Array.isArray(receivedPosts)) {
+          this.posts = receivedPosts.map((post) => ({
+            ...post,
+            isLikedByUser: false,
+            commentsCount: post.commentsCount || 0,
+            showComments: false,
+            comments: [],
+            newCommentText: '',
+          }));
+        } else {
+          console.error('API nije vratio ispravan format podataka (očekivan je niz postova).');
+          this.posts = [];
+        }
+
         this.loading = false;
         console.log(this.posts);
       },
@@ -60,6 +76,26 @@ export class BlogListComponent implements OnInit {
     });
   }
 
+  getAbsoluteImageUrl(relativePath: string | null | undefined): string {
+  if (!relativePath) {
+    return 'https://via.placeholder.com/150';
+  }
+  if (
+    relativePath.startsWith('http://') ||
+    relativePath.startsWith('https://') ||
+    relativePath.startsWith('data:image/')
+  ) {
+    return relativePath;
+  }
+
+  if (relativePath.startsWith('/uploads/')) {
+
+    return `${this.backendBaseUrl}${relativePath}`;
+  }
+
+  return `${this.backendBaseUrl}/uploads/${relativePath}`;
+}
+
   goToCreateBlog(): void {
     this.router.navigate(['/create-blog']);
   }
@@ -69,22 +105,27 @@ export class BlogListComponent implements OnInit {
       console.error('Cannot toggle like: Post ID is undefined.');
       return;
     }
-    const post = this.posts.find((p) => p.ID === postId);
+    const post = this.posts.find((p) => p.id === postId);
     if (!post) {
       console.error('Post not found for ID:', postId);
       return;
     }
 
+     if (!this.currentUserId) {
+      console.error('Morate biti prijavljeni da biste lajkovali post.');
+      return; // Izlazi iz funkcije ako korisnik nije ulogovan
+      }
+
     this.blogService.toggleLike(postId, this.currentUserId).subscribe({
       next: () => {
         post.isLikedByUser = !post.isLikedByUser;
         if (post.isLikedByUser) {
-          post.LikesCount = (post.LikesCount || 0) + 1;
+          post.likesCount = (post.likesCount || 0) + 1;
         } else {
-          post.LikesCount = Math.max(0, (post.LikesCount || 0) - 1);
+          post.likesCount = Math.max(0, (post.likesCount || 0) - 1);
         }
         console.log(
-          `Lajk/Unlajk uspešno za post ${postId}. Novi broj lajkova: ${post.LikesCount}`
+          `Lajk/Unlajk uspešno za post ${postId}. Novi broj lajkova: ${post.likesCount}`
         );
       },
       error: (err) => {
@@ -93,12 +134,12 @@ export class BlogListComponent implements OnInit {
     });
   }
 
-  openComments(postId: string | undefined): void {
+   openComments(postId: string | undefined): void {
     if (postId === undefined) {
       console.error('Cannot open comments: Post ID is undefined.');
       return;
     }
-    const post = this.posts.find((p) => p.ID === postId);
+    const post = this.posts.find((p) => p.id === postId);
     if (!post) {
       console.error('Post not found for ID:', postId);
       return;
@@ -108,9 +149,16 @@ export class BlogListComponent implements OnInit {
 
     if (post.showComments && (!post.comments || post.comments.length === 0)) {
       this.blogService.getCommentsForPost(postId).subscribe({
-        next: (comments: Comment[]) => {
-          post.comments = comments;
-          console.log(`Komentari za post ${postId} učitani.`, comments);
+        next: (response: any) => { 
+          const comments = response.comments; 
+          console.log(comments) 
+          if (Array.isArray(comments)) {
+            post.comments = comments;
+          } else {
+            post.comments = [];
+            console.error('Primljeni komentari nisu niz.');
+          }
+          console.log(`Komentari za post ${postId} učitani.`, post.comments);
         },
         error: (err) => {
           console.error('Greška pri dohvatanju komentara:', err);
@@ -119,40 +167,43 @@ export class BlogListComponent implements OnInit {
     }
   }
 
+
   addComment(post: Post): void {
-    // <-- Sad prima CEO post objekat
-    if (post.ID === undefined) {
+    console.log(this.currentUserId);
+    if (post.id === undefined) {
       console.error('Cannot add comment: Post ID is undefined.');
       return;
     }
 
-    const commentText = post.newCommentText || ''; 
+    const commentText = post.newCommentText || '';
     if (!commentText.trim()) {
-      alert('Komentar ne može biti prazan!');
+      // NAPOMENA: Uklonjena je "alert" funkcija. Koristite modal za poruke.
+      console.warn('Komentar ne može biti prazan!');
       return;
     }
 
-
     if (!this.currentUserId || !this.currentUsername) {
-      alert('Niste prijavljeni. Molimo prijavite se da biste komentarisali.');
+      // NAPOMENA: Uklonjena je "alert" funkcija. Koristite modal za poruke.
+      console.warn('Niste prijavljeni. Molimo prijavite se da biste komentarisali.');
       return;
     }
 
     this.blogService
       .addComment(
-        post.ID,
+        post.id,
         commentText,
         this.currentUserId,
         this.currentUsername
       )
       .subscribe({
         next: (newComment: Comment) => {
-          if (!post.comments) {
+          // Provera da li je comments niz pre dodavanja
+          if (!Array.isArray(post.comments)) {
             post.comments = [];
           }
           post.comments.push(newComment);
-          post.CommentsCount = (post.CommentsCount || 0) + 1;
-          post.newCommentText = ''; // <-- RESETUJ TEKST SAMO ZA TAJ POST
+          post.commentsCount = (post.commentsCount || 0) + 1;
+          post.newCommentText = '';
           console.log('Komentar uspešno dodat:', newComment);
         },
         error: (err) => {

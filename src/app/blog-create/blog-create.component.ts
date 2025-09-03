@@ -19,9 +19,9 @@ import { catchError, finalize } from 'rxjs/operators';
 export class BlogCreateComponent implements OnInit {
 
   newPost: Post = {
-    Title: '',
-    Description: '',
-    imageURLs: []
+    title: '',
+    description: '',
+    imageUrls: []
   };
 
   titleError: string = '';
@@ -65,11 +65,11 @@ export class BlogCreateComponent implements OnInit {
     this.titleError = '';
     this.descriptionError = '';
 
-    if (!this.newPost.Title.trim()) {
+    if (!this.newPost.title.trim()) {
       this.titleError = 'Naslov je obavezan.';
       return;
     }
-    if (!this.newPost.Description.trim()) {
+    if (!this.newPost.description.trim()) {
       this.descriptionError = 'Opis je obavezan.';
       return;
     }
@@ -96,8 +96,8 @@ export class BlogCreateComponent implements OnInit {
       finalize(() => this.uploadingImages = false)
     ).subscribe({
       next: (imageUrls: string[]) => {
-        this.newPost.imageURLs = imageUrls.filter(url => url !== '');
-        if (this.newPost.imageURLs.length !== this.selectedFiles.length) {
+        this.newPost.imageUrls = imageUrls.filter(url => url !== '');
+        if (this.newPost.imageUrls.length !== this.selectedFiles.length) {
             console.warn('Neke slike nisu uspešno uploadovane.');
         }
         this.createBlogPost();
@@ -126,11 +126,11 @@ export class BlogCreateComponent implements OnInit {
 
   private resetForm(): void {
       this.newPost = {
-          UserID: '00000000-0000-0000-0000-000000000001',
-          Username: 'djurdjevic_m',
-          Title: '',
-          Description: '',
-          imageURLs: []
+          userId: '',
+          username: '',
+          title: '',
+          description: '',
+          imageUrls: []
       };
       this.selectedFiles = [];
       this.imagePreviews = [];

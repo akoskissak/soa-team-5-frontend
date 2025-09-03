@@ -51,7 +51,6 @@ export class ProfileComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       const username = params.get('username') || '';
       this.loadProfile(username);
-
       this.loggedInUsername = this.authService.getUsername();
 
       this.profileForm = this.fb.group({
@@ -91,33 +90,71 @@ export class ProfileComponent implements OnInit {
   }
 
   loadFollowers() {
-    this.followerService
-      .getFollowers(this.profile!.username)
-      .subscribe((data) => {
-        this.followers = data.followers;
-        // ako followujemo onda ucitamo recommendation
+  this.followerService
+    .getFollowers(this.profile!.username)
+    .subscribe({
+      next: (data) => {
+        if (data && data.followers) {
+          this.followers = data.followers;
+        } else {
+          this.followers = []; 
+        }
+
+        console.log("data", data)
+        console.log("followers: ", this.followers)
+        
         if (!this.isOwner() && this.isFollowing(this.loggedInUsername)) {
           this.loadRecommendations();
         } else {
           this.recommendedUsers = [];
         }
-      });
-  }
+      },
+      error: (err) => {
+        console.error('Error fetching followers:', err);
+        this.followers = [];
+        this.recommendedUsers = [];
+      }
+    });
+}
 
   loadFollowing() {
-    this.followerService
-      .getFollowing(this.profile!.username)
-      .subscribe((data) => (this.following = data.following));
-  }
-
-  loadRecommendations() {
-    this.followerService.getRecommendations().subscribe({
+  this.followerService
+    .getFollowing(this.profile!.username)
+    .subscribe({
       next: (data) => {
-        this.recommendedUsers = data.recommendations;
+        if (data && data.following) {
+          this.following = data.following;
+        } else {
+          this.following = [];
+        }
       },
-      error: (err) => console.error('Error fetching recommendations', err),
+      error: (err) => {
+        console.error('Error fetching following:', err);
+        this.following = [];
+      },
     });
-  }
+}
+
+loadRecommendations() {
+  this.followerService.getRecommendations().subscribe({
+    next: (data) => {
+      console.log("recomendations", data);
+      if (data && data.recommendedUsers) {
+        this.recommendedUsers = data.recommendedUsers;
+        console.log("recomendations", data);
+
+      } else {
+        this.recommendedUsers = [];
+        console.log("recomendations", data);
+
+      }
+    },
+    error: (err) => {
+      console.error('Error fetching recommendations:', err);
+      this.recommendedUsers = [];
+    },
+  });
+}
 
   toggleFollowers() {
     this.showFollowers = !this.showFollowers;
@@ -134,10 +171,11 @@ export class ProfileComponent implements OnInit {
   }
 
   isFollowing(username: string | null): boolean {
-    if (username) return this.followers.includes(username);
-    return false;
+  if (username && this.followers) {
+    return this.followers.includes(username);
   }
-
+  return false;
+}
   canFollow(username: string | undefined): boolean {
     return this.authService.getUsername() !== username;
   }
@@ -147,6 +185,7 @@ export class ProfileComponent implements OnInit {
     if (!this.canFollow(this.profile?.username)) return;
 
     if (this.isFollowing(username)) {
+      console.log(username)
       this.followerService.unfollow(this.profile!.username).subscribe({
         next: () => {
           this.followers = this.followers.filter((u) => u !== username);
