@@ -17,7 +17,7 @@ export class UserListComponent {
   ) {}
 
   ngOnInit() {
-    this.userService.getAllUsers().subscribe((data) => {
+     this.userService.getAllUsers().subscribe((data) => {
       this.users = data;
       console.log(this.users);
       
@@ -25,6 +25,7 @@ export class UserListComponent {
   }
 
   toggleBlock(user: User) {
+    console.log(user)
     this.userService.toggleBlock(user).subscribe((updatedUser: User) => {
       const index = this.users.findIndex(u => u.id === updatedUser.id);
       if (index !== -1) {

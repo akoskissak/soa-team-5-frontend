@@ -1,10 +1,10 @@
 export type Role = 'admin' | 'guide' | 'tourist';
 
 export interface User {
-  id?: string;
+  id: string;
   username: string;
   email: string;
-  password?: string;
+  password: string;
   role: Role;
-  isBlocked?: boolean;
+  isBlocked: boolean;
 }

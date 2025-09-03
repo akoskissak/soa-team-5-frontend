@@ -37,7 +37,7 @@ export class ProfileComponent implements OnInit {
 
   errorMessage: string | null = null;
 
-  private backendBaseUrl = 'http://localhost:8080';
+  private backendBaseUrl = 'http://localhost:8085';
 
   constructor(
     private route: ActivatedRoute,
@@ -68,12 +68,14 @@ export class ProfileComponent implements OnInit {
     this.profileService.getProfile(username ?? undefined).subscribe({
       next: (data) => {
         this.profile = data;
+        console.log(this.profile)
         this.errorMessage = null;
         this.profileForm.patchValue(this.profile);
         this.imagePreviewUrl = this.getAbsoluteImageUrl(
           this.profile.profilePicture
         );
 
+        console.log(this.imagePreviewUrl)
         this.loadFollowers();
         this.loadFollowing();
       },
