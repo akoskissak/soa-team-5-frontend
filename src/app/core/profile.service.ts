@@ -3,6 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserProfileResponse } from '../profile/model/user-profile-response.model';
 
+export interface UpdateProfileRequest {
+  profile: UserProfileResponse;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -21,9 +25,11 @@ export class ProfileService {
     return this.http.get<UserProfileResponse>(this.profileApi);
   }
 
-  updateProfile(
-    profileData: UserProfileResponse
-  ): Observable<UserProfileResponse> {
-    return this.http.put<UserProfileResponse>(this.profileApi, profileData);
-  }
+  updateProfile(profileData: UserProfileResponse): Observable<UserProfileResponse> {
+  const requestBody: UpdateProfileRequest = {
+    profile: profileData,
+  };
+  
+  return this.http.put<UserProfileResponse>(this.profileApi, requestBody);
+}
 }

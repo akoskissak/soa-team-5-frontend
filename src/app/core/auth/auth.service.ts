@@ -14,10 +14,10 @@ export class AuthService {
 
   login(credentials: { username: string; password: string }) {
     return this.http
-      .post<{ token: string }>(`${this.API_URL}/login`, credentials)
+      .post<{ accessToken: string }>(`${this.API_URL}/login`, credentials)
       .pipe(
         tap((res) => {
-          this.setToken(res.token);
+          this.setToken(res.accessToken);
           this.setUserRoleFromToken();
         })
       );
@@ -45,6 +45,7 @@ export class AuthService {
   }
 
   setToken(token: string) {
+    console.log(token)
     localStorage.setItem(this.TOKEN_KEY, token);
   }
 

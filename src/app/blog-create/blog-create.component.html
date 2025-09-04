@@ -4,19 +4,19 @@
   <form (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="title">Naslov:</label>
-      <input type="text" id="title" [(ngModel)]="newPost.Title" name="title" required>
+      <input type="text" id="title" [(ngModel)]="newPost.title" name="title" required>
       <div *ngIf="titleError" class="error-message">{{ titleError }}</div>
     </div>
 
     <div class="form-group">
       <label for="description">Opis (podržava markdown):</label>
-      <textarea id="description" [(ngModel)]="newPost.Description" name="description" rows="10" required></textarea>
+      <textarea id="description" [(ngModel)]="newPost.description" name="description" rows="10" required></textarea>
       <div *ngIf="descriptionError" class="error-message">{{ descriptionError }}</div>
     </div>
 
      <div class="markdown-preview-container">
       <h3>Markdown pregled:</h3>
-      <markdown [data]="newPost.Description"></markdown>
+      <markdown [data]="newPost.description"></markdown>
     </div>
 
     <div class="form-group">

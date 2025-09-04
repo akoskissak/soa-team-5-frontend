@@ -10,27 +10,28 @@ import { Comment } from '../shared/models/comment.model';
   providedIn: 'root'
 })
 export class BlogService {
-  private apiUrl = 'http://localhost:8081/posts'; 
-  private api = 'http://localhost:8081'; 
+  private apiUrl = 'http://localhost:8080/posts'; 
+  private api = 'http://localhost:8086'; 
 
   constructor(private http: HttpClient) { }
 
  
-  createPost(post: Post): Observable<Post> {
-    
+   createPost(post: Post): Observable<Post> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
+    
     const postToSend = {
-      UserID: post.UserID,
-      Username: post.Username,
-      Title: post.Title,
-      Description: post.Description,
-      ImageURLs: post.imageURLs 
+      userId: post.userId,
+      username: post.username,
+      title: post.title,
+      description: post.description,
+      imageUrls: post.imageUrls
     };
 
     return this.http.post<Post>(this.apiUrl, postToSend, { headers });
   }
+
 
   getPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(this.apiUrl);

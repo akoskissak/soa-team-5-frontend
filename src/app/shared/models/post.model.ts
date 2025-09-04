@@ -1,17 +1,17 @@
 import { Comment } from './comment.model'; 
 
 export interface Post {
-  ID?: string; 
-  UserID?: string; 
-  Username?: string; 
-  Title: string; 
-  Description: string; 
-  CreatedAt?: Date; 
-  imageURLs?: string[]; 
-  LikesCount?: number; 
+  id?: string; 
+  userId?: string; 
+  username?: string; 
+  title: string; 
+  description: string; 
+  createdAt?: Date; 
+  imageUrls?: string[]; 
+  likesCount?: number; 
 
   isLikedByUser?: boolean; 
-  CommentsCount?: number;  
+  commentsCount?: number;  
   showComments?: boolean;  
   comments?: Comment[];
   newCommentText?: string; 
