@@ -29,4 +29,12 @@ export class UserService {
       block: !user.isBlocked
     })
   }
+
+  setPosition(lat: number, lng: number): Observable<void> {
+    return this.http.post<void>(this.stakeholdersApi + '/tourist/position', { lat, lng });
+  }
+
+  getPosition(): Observable<{ lat: number; lng: number }> {
+    return this.http.get<{ lat: number; lng: number }>(this.stakeholdersApi + '/tourist/position');
+  }
 }

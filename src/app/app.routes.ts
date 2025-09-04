@@ -62,5 +62,12 @@ export const routes: Routes = [
       import('./tours/my-tours/my-tours.component').then(
         (m) => m.MyToursComponent
       )
+  },
+   {
+    path: 'position-simulator',
+    loadComponent: () =>
+      import('./position-simulator/position-simulator').then(
+        (m) => m.PositionSimulator
+      )
   }
 ];
