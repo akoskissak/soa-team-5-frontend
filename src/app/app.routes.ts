@@ -65,6 +65,15 @@ export const routes: Routes = [
         (m) => m.MyToursComponent
       )
   },
+
   { path: 'tours/:tourId/review', component: ReviewFormComponent },
-   { path: 'tours/:tourId/reviews', component: ReviewsDisplay }
+  { path: 'tours/:tourId/reviews', component: ReviewsDisplay },
+   {
+    path: 'position-simulator',
+    loadComponent: () =>
+      import('./position-simulator/position-simulator').then(
+        (m) => m.PositionSimulator
+      )
+  }
+
 ];
