@@ -78,21 +78,15 @@
 }
 
 .badge-draft {
-  /* background: #fff7ed;   /* orange-50 */
-  color: #9a3412;        /* orange-800 */
-  /* border-color: #fdba74; /* orange-300 */
+  color: #9a3412;
 }
 
 .badge-published {
-  /* background: #ecfdf5;   /* emerald-50 */
-  color: #065f46;        /* emerald-800 */
-  /* border-color: #6ee7b7; /* emerald-300 */
+  color: #065f46;
 }
 
 .badge-archived {
-  /* background: #f1f5f9;   /* slate-100 */
-  color: #334155;        /* slate-700 */
-  /* border-color: #cbd5e1; /* slate-300 */
+  color: #334155;
 }
 
 .chip {
@@ -104,21 +98,21 @@
 }
 
 .chip-easy {
-  background: #eff6ff;   /* blue-50 */
-  border-color: #bfdbfe; /* blue-200 */
-  color: #1e3a8a;        /* blue-900 */
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1e3a8a;
 }
 
 .chip-medium {
-  background: #fef9c3;   /* yellow-100 */
-  border-color: #fde68a; /* yellow-300 */
-  color: #713f12;        /* yellow-900 */
+  background: #fef9c3;
+  border-color: #fde68a;
+  color: #713f12;
 }
 
 .chip-hard {
-  background: #fee2e2;   /* red-100 */
-  border-color: #fecaca; /* red-200 */
-  color: #7f1d1d;        /* red-900 */
+  background: #fee2e2;
+  border-color: #fecaca;
+  color: #7f1d1d;
 }
 
 .tags {
@@ -133,4 +127,26 @@
   background: #f1f5f9;
   border: 1px solid #e2e8f0;
   border-radius: 999px;
+}
+
+/* Novo dodani stilovi */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+}
+
+.review-button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.review-button:hover {
+  background-color: #2563eb;
 }

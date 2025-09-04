@@ -11,6 +11,7 @@
       <a *ngIf="isLoggedIn && !isAdmin" routerLink="/blogs" routerLinkActive="active">Blog</a>
       <a *ngIf="isLoggedIn && isGuide" routerLink="/create-tour" routerLinkActive="active">Create tour</a>
       <a *ngIf="isLoggedIn && isGuide" routerLink="/tours" routerLinkActive="active">Tours</a>
+      <a *ngIf="isLoggedIn && isTourist" routerLink="/tours" routerLinkActive="active">Tours</a>
       <a *ngIf="isLoggedIn && !isAdmin && !isGuide" routerLink="/position-simulator" routerLinkActive="active">Position simulator</a>
       <button *ngIf="isLoggedIn" (click)="logout()" class="logout-button">
         Odjavi se

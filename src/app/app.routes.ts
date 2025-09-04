@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { ReviewFormComponent } from './tours/review-form/review-form';
+import { ReviewsDisplay } from './tours/reviews-display/reviews-display';
 
 export const routes: Routes = [
   {
@@ -63,6 +65,9 @@ export const routes: Routes = [
         (m) => m.MyToursComponent
       )
   },
+
+  { path: 'tours/:tourId/review', component: ReviewFormComponent },
+  { path: 'tours/:tourId/reviews', component: ReviewsDisplay },
    {
     path: 'position-simulator',
     loadComponent: () =>
@@ -70,4 +75,5 @@ export const routes: Routes = [
         (m) => m.PositionSimulator
       )
   }
+
 ];

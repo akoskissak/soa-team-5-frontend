@@ -1,0 +1,39 @@
+<div class="reviews-container">
+  <h2>Reviews</h2>
+
+  @if (reviews.length === 0) {
+    <p class="no-reviews-message">No reviews found for this tour.</p>
+  } @else {
+    @for (review of reviews; track $index) {
+      <div class="review-card">
+        <div class="review-header">
+          <span class="review-rating">Rating: {{ review.rating }}/5</span>
+          <span class="review-username">By: {{ review.username }}</span>
+        </div>
+        
+        <p class="review-comment" *ngIf="review.comment">{{ review.comment }}</p>
+
+        <div class="review-meta">
+          <span class="review-date">Date of Visit: {{ review.visitedDate | date:'shortDate' }}</span>
+        </div>
+
+        @if (review.ReviewImages.length > 0) {
+          <div class="review-images">
+            @for (image of review.ReviewImages; track $index) {
+              <img [src]="'http://localhost:8080' + image.imagePath" alt="Review Image"
+              class="clickable"
+                (click)="openImageModal('http://localhost:8080' + image.imagePath)">
+            }
+          </div>
+        }
+      </div>
+    }
+  }
+</div>
+
+@if (isModalOpen && selectedImageUrl) {
+  <div class="image-modal-overlay" (click)="closeModal()">
+    <span class="close-modal" (click)="closeModal()">&times;</span>
+    <img [src]="selectedImageUrl" class="modal-content" (click)="$event.stopPropagation()" alt="Full screen review image">
+  </div>
+}
