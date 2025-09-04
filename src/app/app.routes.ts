@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { ReviewFormComponent } from './tours/review-form/review-form';
+import { ReviewsDisplay } from './tours/reviews-display/reviews-display';
 
 export const routes: Routes = [
   {
@@ -62,5 +64,7 @@ export const routes: Routes = [
       import('./tours/my-tours/my-tours.component').then(
         (m) => m.MyToursComponent
       )
-  }
+  },
+  { path: 'tours/:tourId/review', component: ReviewFormComponent },
+   { path: 'tours/:tourId/reviews', component: ReviewsDisplay }
 ];

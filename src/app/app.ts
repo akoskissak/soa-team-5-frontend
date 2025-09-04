@@ -15,6 +15,7 @@ export class App {
   isGuide = false;
   isAdmin = false;
   isLoggedIn = false;
+  isTourist = false;
   private sub?: Subscription;
 
   constructor(public authService: AuthService, private router: Router) {}
@@ -24,6 +25,7 @@ export class App {
     this.sub = this.authService.role$.subscribe((role) => {
       this.isAdmin = role === 'admin';
       this.isGuide = role === 'guide';
+      this.isTourist = role === 'tourist';
       this.isLoggedIn = !!role;
     });
   }

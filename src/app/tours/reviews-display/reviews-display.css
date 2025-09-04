@@ -1,0 +1,155 @@
+.reviews-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  background-color: #f8fafc;
+  min-height: calc(100vh - 60px);
+}
+
+h2 {
+  text-align: center;
+  color: #1e293b;
+  margin-bottom: 30px;
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.no-reviews-message {
+  color: #64748b;
+  font-size: 1.2rem;
+  font-style: italic;
+  margin-top: 50px;
+}
+
+.review-card {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.1);
+  margin-bottom: 25px;
+  width: 100%;
+  max-width: 750px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 15px;
+}
+
+.review-rating {
+  font-weight: 700;
+  color: #3b82f6;
+  font-size: 1.4rem;
+}
+
+.review-username {
+  font-style: normal;
+  font-weight: 500;
+  color: #475569;
+}
+
+.review-comment {
+  margin: 0;
+  color: #1e293b;
+  line-height: 1.7;
+}
+
+.review-meta {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 15px;
+  margin-top: auto;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.review-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.review-images img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #cbd5e1;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.1);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.review-images img:hover {
+  transform: scale(1.05);
+  border-color: #3b82f6;
+}
+
+.loading-message {
+  text-align: center;
+  color: #64748b;
+  margin-top: 50px;
+}
+
+.review-images img.clickable {
+  cursor: pointer;
+}
+
+.review-images img.clickable:hover {
+  transform: scale(1.05);
+  border-color: #3b82f6;
+}
+
+.image-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  animation: zoomIn 0.3s ease;
+}
+
+.close-modal {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.close-modal:hover {
+  color: #bbb;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.8); }
+  to { transform: scale(1); }
+}

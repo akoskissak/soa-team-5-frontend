@@ -1,33 +1,65 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Tour } from '../../shared/models/tour.model';
 import { TourService } from '../tour.service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../core/auth/auth.service';
+import { Subscription } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-my-tours.component',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './my-tours.component.html',
   styleUrl: './my-tours.component.css'
 })
-export class MyToursComponent {
-
+export class MyToursComponent implements OnInit, OnDestroy {
   tours: Tour[] = [];
+  isTourist = false;
+  isGuide = false;
+  private roleSubscription: Subscription | undefined;
 
-  constructor(private tourService: TourService) {}
+  constructor(private tourService: TourService, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.fetchTours();
+    this.roleSubscription = this.authService.role$.subscribe((role) => {
+      this.isTourist = role === 'tourist';
+      this.isGuide = role === 'guide';
+      this.fetchTours(role);
+    });
   }
 
-  fetchTours(): void {
-    this.tourService.getAllTours().subscribe({
-      next: (data: Tour[]) => {
-        this.tours = data;
+  ngOnDestroy(): void {
+    this.roleSubscription?.unsubscribe();
+  }
+
+  fetchTours(role: string | null): void {
+   if (role === 'guide') {
+      this.tourService.getAllTours().subscribe({
+        next: (data: any[]) => {
+          this.tours = data.map(tour => ({
+            ...tour,
+            id: tour.ID
+          }));
+ },
+        error: (err: any) => {
+          console.error(err);
+        }
+      });
+    } else if (role === 'tourist') {
+      this.tourService.getAllPublishedTours().subscribe({
+        next: (data: any[]) => {
+        this.tours = data.map(tour => ({
+          ...tour,
+          id: tour.ID 
+        }));
       },
-      error: (err: any) => {
-        console.error(err);
-      }
-    });
+        error: (err: any) => {
+          console.error(err);
+        }
+      });
+    } else {
+      this.tours = [];
+    }
   }
 
   statusClass(status: Tour['status']) {
