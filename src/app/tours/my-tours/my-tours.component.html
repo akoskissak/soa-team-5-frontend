@@ -35,10 +35,12 @@
     @if (isTourist) {
     <div class="actions">
       <button class="review-button" [routerLink]="['/tours', tour.id, 'review']">Review</button>
+      <button class="view-route-button" [routerLink]="['/tours', tour.id, 'map']">View Route</button>
     </div>
     }
     @if (isGuide) { <div class="actions">
       <button class="view-reviews-button" [routerLink]="['/tours', tour.id, 'reviews']">Reviews</button>
+      <button class="edit-route-button" [routerLink]="['/tours', tour.id, 'map']">Edit Route</button>
     </div>
     }
     </article>

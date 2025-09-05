@@ -1,0 +1,10 @@
+<div class="map-container">
+  <h2>Tour Route</h2>
+  <div id="tour-map"></div>
+
+  @if (isGuide) {
+    <div class="action-buttons">
+      <button [routerLink]="['/tours', tourId, 'keypoints', 'new']">Add New Keypoint</button>
+    </div>
+  }
+</div>

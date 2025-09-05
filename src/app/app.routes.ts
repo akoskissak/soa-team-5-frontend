@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { ReviewFormComponent } from './tours/review-form/review-form';
 import { ReviewsDisplay } from './tours/reviews-display/reviews-display';
+import { TourMap } from './tours/tour-map/tour-map';
 
 export const routes: Routes = [
   {
@@ -74,6 +75,7 @@ export const routes: Routes = [
       import('./position-simulator/position-simulator').then(
         (m) => m.PositionSimulator
       )
-  }
+  },
+  { path: 'tours/:tourId/map', component: TourMap }
 
 ];

@@ -1,0 +1,19 @@
+/* tour-map.css */
+
+/* Definiše dimenzije kontejnera mape */
+#tour-map {
+  height: 600px; /* Možete prilagoditi visinu po potrebi */
+  width: 100%;
+}
+
+.map-container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
