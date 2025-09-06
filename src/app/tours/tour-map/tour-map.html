@@ -1,0 +1,11 @@
+<div class="map-container">
+  <h2>Tour Route</h2>
+
+  @if (isGuide) {
+    <div class="action-buttons">
+      <button (click)="addNewKeypoint()" class="btn-primary">Add New Keypoint</button>
+    </div>
+  }
+
+  <div id="tour-map"></div>
+</div>

@@ -1,5 +1,5 @@
 <div>
-  <h2 class="keypoint-header">Keypoints</h2>
+  <h2 class="keypoint-header">{{ isEditMode ? 'Edit Keypoint' : 'Create Keypoint' }}</h2>
   <div id="map" style="height: 400px; margin-bottom: 20px;"></div>
 
   <form (ngSubmit)="saveKeypoint(fileInput)">
@@ -10,8 +10,16 @@
     <textarea [(ngModel)]="kpDescription" name="kpDescription" required></textarea>
 
     <label>Image</label>
-    <input type="file" #fileInput (change)="onImageSelected($event)" />
+    <input type="file" #fileInput (change)="onImageSelected($event)" [required]="!isEditMode" />
+    @if (isEditMode && currentKeypoint?.imagePath) {
+      <small>Current image: {{ currentKeypoint?.imagePath }}</small>
+    }
 
-    <button type="submit">Add keypoint</button>
-  </form>
+   <div class="form-buttons">
+  <button type="submit" class="save-button">{{ isEditMode ? 'Update Keypoint' : 'Add Keypoint' }}</button>
+  @if (isEditMode) {
+    <button type="button" (click)="cancel()" class="cancel-button">Cancel</button>
+  }
+</div>
+</form>
 </div>

@@ -98,4 +98,8 @@ export class TourCreateComponent {
     });
     this.keypoints = [];
   }
+  onKeypointAdded(keypoint: Keypoint) {
+  console.log('Keypoint added:', keypoint);
+ 
+}
 }

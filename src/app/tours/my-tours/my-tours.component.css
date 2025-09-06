@@ -129,24 +129,33 @@
   border-radius: 999px;
 }
 
-/* Novo dodani stilovi */
 .actions {
   display: flex;
   justify-content: flex-end;
   margin-top: auto;
+  gap: 8px;
 }
 
-.review-button {
-  background-color: #3b82f6;
-  color: white;
-  padding: 8px 16px;
+.action-button {
+  background-color: white; 
+  color: #334155;
+  border: 1px solid #e2e8f0;
   border-radius: 999px;
-  border: none;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  font-weight: 600;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease-in-out;
 }
 
-.review-button:hover {
-  background-color: #2563eb;
+.action-button:hover {
+  background-color: #f1f5f9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(15, 23, 42, 0.05);
+}
+
+.action-button i {
+  font-size: 16px;
 }

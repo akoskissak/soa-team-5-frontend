@@ -1,0 +1,31 @@
+.map-container {
+  padding: 20px;
+}
+
+h2 {
+  margin-bottom: 10px; /* Dodaje razmak ispod naslova */
+}
+
+.action-buttons {
+  text-align: left; /* Poravnava dugme s lijeve strane */
+  margin-bottom: 20px; /* Dodaje razmak ispod dugmeta, iznad mape */
+}
+
+#tour-map {
+  height: 500px;
+  width: 100%;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
