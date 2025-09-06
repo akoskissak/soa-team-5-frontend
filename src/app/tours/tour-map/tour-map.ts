@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TourService } from '../tour.service';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import * as L from 'leaflet';
 import { Keypoint } from '../../shared/models/keypoint.model';
 import { AuthService } from '../../core/auth/auth.service';
@@ -34,6 +34,7 @@ export class TourMap implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private tourService: TourService,
     private route: ActivatedRoute,
+    private router: Router,
     private authService: AuthService
   ) { }
 
@@ -93,15 +94,84 @@ export class TourMap implements OnInit, AfterViewInit, OnDestroy {
     });
 
     const coordinates: L.LatLngExpression[] = [];
-    this.keypoints.forEach(kp => {
-      const marker = L.marker([kp.latitude, kp.longitude], { icon: this.blueIcon }).addTo(this.map);
-      marker.bindPopup(`<b>${kp.name}</b><br>${kp.description}`);
+   this.keypoints.forEach(kp => {
+  const marker = L.marker([kp.latitude, kp.longitude], { icon: this.blueIcon }).addTo(this.map);
+  
+  let imageUrl = kp.imagePath;
+  if (imageUrl?.startsWith('static\\')) {
+    imageUrl = imageUrl.substring(7); 
+  }
+  if (imageUrl?.startsWith('/static\\')) {
+    imageUrl = imageUrl.substring(8);  
+  }
+  imageUrl = imageUrl?.replace(/\\/g, '/');
+  
+  const cleanImageUrl = imageUrl?.replace(/^uploads\//, '');
+  
+  const gatewayUrl = `http://localhost:8080/uploads/${cleanImageUrl}`;
+  
+      const fullImageUrl = gatewayUrl;
+      
+      let popupContent = `<div style="text-align: center; min-width: 200px;">
+        <img src="${fullImageUrl}" alt="${kp.name}" style="width: 150px; height: 100px; object-fit: cover; border-radius: 4px; margin-bottom: 8px;" onerror="this.style.display='none'">
+        <h4 style="margin: 5px 0;">${kp.name}</h4>
+        <p style="margin: 5px 0; font-size: 12px;">${kp.description}</p>`;
+      
+      if (this.isGuide) {
+        popupContent += `<div class="popup-buttons" style="margin-top: 10px;">
+          <button onclick="window.editKeypoint('${kp.id}')" class="btn-edit" style="background-color: #28a745; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; font-size: 12px; margin-right: 5px;">Edit</button>
+          <button onclick="window.deleteKeypoint('${kp.id}')" class="btn-delete" style="background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; font-size: 12px;">Delete</button>
+        </div>`;
+      }
+      
+      popupContent += '</div>';
+      
+      marker.bindPopup(popupContent, { maxWidth: 250 });
       coordinates.push([kp.latitude, kp.longitude]);
     });
+
+    (window as any).editKeypoint = (keypointId: string) => {
+      this.editKeypoint(keypointId);
+    };
+
+    (window as any).deleteKeypoint = (keypointId: string) => {
+      this.deleteKeypoint(keypointId);
+    };
 
     if (coordinates.length > 0) {
       const polyline = L.polyline(coordinates, { color: 'blue', weight: 4 }).addTo(this.map);
       this.map.fitBounds(polyline.getBounds());
     }
+  }
+
+  editKeypoint(keypointId: string): void {
+    const keypoint = this.keypoints.find(kp => kp.id === keypointId);
+    
+    if (keypoint) {
+      this.router.navigate(['/tours', this.tourId, 'keypoints', 'edit', keypointId], {
+        state: { keypoint: keypoint }
+      });
+    } else {
+      console.error('Keypoint not found');
+      alert('Keypoint not found');
+    }
+  }
+
+  deleteKeypoint(keypointId: string): void {
+    if (confirm('Are you sure you want to delete this keypoint?')) {
+      this.tourService.deleteKeypoint(keypointId).subscribe(
+        () => {
+          this.loadTourKeypoints();
+        },
+        (error) => {
+          console.error('Failed to delete keypoint:', error);
+          alert('Failed to delete keypoint');
+        }
+      );
+    }
+  }
+
+  addNewKeypoint(): void {
+    this.router.navigate(['/tours', this.tourId, 'keypoints', 'new']);
   }
 }

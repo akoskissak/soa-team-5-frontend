@@ -45,7 +45,8 @@
     <div class="keypoints-container">
       <app-keypoint-create
         [keypoints]="keypoints"
-        [removeRequests]="removeRequests">
+        [removeRequests]="removeRequests"
+        (keypointAdded)="onKeypointAdded($event)">
       </app-keypoint-create>
     </div>
   </div>

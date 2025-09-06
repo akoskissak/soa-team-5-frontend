@@ -26,7 +26,16 @@ form textarea {
   min-height: 80px;
 }
 
-form button {
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.save-button {
+  background-color: #007bff;
+  color: white;
   border: none;
   padding: 10px 16px;
   border-radius: 8px;
@@ -34,4 +43,24 @@ form button {
   font-size: 14px;
   font-weight: 600;
   transition: background-color 0.2s ease;
+}
+
+.save-button:hover {
+  background-color: #0056b3;
+}
+
+.cancel-button {
+  background-color: #e2e8f0;
+  color: #475569;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.cancel-button:hover {
+  background-color: #cbd5e1;
 }

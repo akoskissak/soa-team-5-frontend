@@ -34,9 +34,6 @@ export class TourService {
    public getKeyPointsByTourId(tourId: string): Observable<Keypoint[]> {
     return this.http.get<Keypoint[]>(`${this.apiUrl}/${tourId}/keypoints`);
   }
-  public getKeypointById(keypointId: string): Observable<Keypoint> {
-    return this.http.get<Keypoint>(`${this.keypointApiUrl}/${keypointId}`);
-  }
 
   public createKeypoint(keypoint: FormData): Observable<Keypoint> {
     return this.http.post<Keypoint>(this.keypointApiUrl, keypoint);
@@ -49,5 +46,8 @@ export class TourService {
   public deleteKeypoint(keypointId: string): Observable<any> {
     return this.http.delete<any>(`${this.keypointApiUrl}/${keypointId}`);
   }
+  public updateKeypointWithFormData(keypointId: string, formData: FormData): Observable<Keypoint> {
+  return this.http.put<Keypoint>(`${this.keypointApiUrl}/${keypointId}`, formData);
+}
   
 }

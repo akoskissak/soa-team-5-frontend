@@ -32,17 +32,26 @@
     </div>
     }
 
-    @if (isTourist) {
-    <div class="actions">
-      <button class="review-button" [routerLink]="['/tours', tour.id, 'review']">Review</button>
-      <button class="view-route-button" [routerLink]="['/tours', tour.id, 'map']">View Route</button>
-    </div>
-    }
-    @if (isGuide) { <div class="actions">
-      <button class="view-reviews-button" [routerLink]="['/tours', tour.id, 'reviews']">Reviews</button>
-      <button class="edit-route-button" [routerLink]="['/tours', tour.id, 'map']">Edit Route</button>
-    </div>
-    }
+  @if (isTourist) {
+  <div class="actions">
+    <button class="action-button" [routerLink]="['/tours', tour.id, 'review']" title="Leave a review">
+      <i class="fas fa-star"></i>
+    </button>
+    <button class="action-button" [routerLink]="['/tours', tour.id, 'map']" title="View route">
+      <i class="fas fa-map"></i>
+    </button>
+  </div>
+}
+@if (isGuide) {
+  <div class="actions">
+    <button class="action-button" [routerLink]="['/tours', tour.id, 'reviews']" title="See reviews">
+      <i class="fas fa-comments"></i>
+    </button>
+    <button class="action-button" [routerLink]="['/tours', tour.id, 'map']" title="Edit route">
+      <i class="fas fa-pencil-alt"></i>
+    </button>
+  </div>
+}
     </article>
   }
 </div>

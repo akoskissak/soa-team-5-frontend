@@ -34,12 +34,12 @@ export class MyToursComponent implements OnInit, OnDestroy {
 
   fetchTours(role: string | null): void {
    if (role === 'guide') {
-      this.tourService.getAllTours().subscribe({
-        next: (data: any[]) => {
-          this.tours = data.map(tour => ({
-            ...tour,
-            id: tour.ID
-          }));
+      this.tourService.getAllTours().subscribe({
+       next: (data: any[]) => {
+        this.tours = data.map(tour => ({
+         ...tour,
+        id: tour.ID
+       }));
  },
         error: (err: any) => {
           console.error(err);
