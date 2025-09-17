@@ -4,7 +4,7 @@ import { TourService } from '../tour.service';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/auth/auth.service';
 import { Subscription } from 'rxjs';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-my-tours.component',
@@ -18,7 +18,9 @@ export class MyToursComponent implements OnInit, OnDestroy {
   isGuide = false;
   private roleSubscription: Subscription | undefined;
 
-  constructor(private tourService: TourService, private authService: AuthService) {}
+  constructor(private tourService: TourService,
+    private authService: AuthService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.roleSubscription = this.authService.role$.subscribe((role) => {
@@ -33,14 +35,14 @@ export class MyToursComponent implements OnInit, OnDestroy {
   }
 
   fetchTours(role: string | null): void {
-   if (role === 'guide') {
+    if (role === 'guide') {
       this.tourService.getAllTours().subscribe({
-       next: (data: any[]) => {
-        this.tours = data.map(tour => ({
-         ...tour,
-        id: tour.ID
-       }));
- },
+        next: (data: any[]) => {
+          this.tours = data.map(tour => ({
+            ...tour,
+            id: tour.ID
+          }));
+        },
         error: (err: any) => {
           console.error(err);
         }
@@ -48,11 +50,11 @@ export class MyToursComponent implements OnInit, OnDestroy {
     } else if (role === 'tourist') {
       this.tourService.getAllPublishedTours().subscribe({
         next: (data: any[]) => {
-        this.tours = data.map(tour => ({
-          ...tour,
-          id: tour.ID 
-        }));
-      },
+          this.tours = data.map(tour => ({
+            ...tour,
+            id: tour.ID
+          }));
+        },
         error: (err: any) => {
           console.error(err);
         }
@@ -77,5 +79,13 @@ export class MyToursComponent implements OnInit, OnDestroy {
       'chip-medium': d === 'Medium',
       'chip-hard': d === 'Hard',
     };
+  }
+
+  startTourExecution(tour: Tour) {
+    if (!tour.id) {
+      return;
+    }
+
+    this.router.navigate(['/position-simulator'], { queryParams: { tourId: tour.id } });
   }
 }
