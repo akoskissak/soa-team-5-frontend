@@ -31,7 +31,7 @@ export class TourService {
   public getReviewsByTourId(tourId: string): Observable<Review[]> {
     return this.http.get<Review[]>(`${this.apiUrl}/${tourId}/reviews`);
   }
-   public getKeyPointsByTourId(tourId: string): Observable<Keypoint[]> {
+  public getKeyPointsByTourId(tourId: string): Observable<Keypoint[]> {
     return this.http.get<Keypoint[]>(`${this.apiUrl}/${tourId}/keypoints`);
   }
 
@@ -47,7 +47,11 @@ export class TourService {
     return this.http.delete<any>(`${this.keypointApiUrl}/${keypointId}`);
   }
   public updateKeypointWithFormData(keypointId: string, formData: FormData): Observable<Keypoint> {
-  return this.http.put<Keypoint>(`${this.keypointApiUrl}/${keypointId}`, formData);
-}
-  
+    return this.http.put<Keypoint>(`${this.keypointApiUrl}/${keypointId}`, formData);
+  }
+
+  public startTourExecution(tourId: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/${tourId}/start`, {});
+  }
+
 }

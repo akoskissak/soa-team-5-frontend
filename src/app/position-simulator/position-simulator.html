@@ -1,21 +1,31 @@
 <html>
+
 <head>
     <title>Position Simulator</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        #map { height: 600px; }
+        #map {
+            height: 600px;
+        }
     </style>
 </head>
+
 <body>
 
     <h1>Tourist Position Simulator</h1>
     <div id="map" title="Karta za odabir pozicije"></div>
     <div class="location-info">
-    <p>Current possition: <span id="current-location">{{ currentLocation }}</span></p>
-    <p>Address: <span id="current-address">{{ currentAddress }}</span></p>
+        <p>Current possition: <span id="current-location">{{ currentLocation }}</span></p>
+        <p>Address: <span id="current-address">{{ currentAddress }}</span></p>
     </div>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="simulator.js"></script>
 
+    @if (tourStarted) {
+    <h2>Tour started</h2>
+    } @else if (tourId) {
+    <button class="btn-start-tour-execution" (click)="startTourExecution()">Start tour execution</button>
+    }
 </body>
+
 </html>
