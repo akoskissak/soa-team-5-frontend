@@ -18,6 +18,7 @@ export class MyToursComponent implements OnInit, OnDestroy {
   isTourist = false;
   isGuide = false;
   private roleSubscription: Subscription | undefined;
+  errorMessage: string | null = null;
   purchasedTourIds = new Set<string>(); 
 
   constructor(private tourService: TourService, private authService: AuthService, private purchaseService: PurchaseService, private router: Router) {}
@@ -114,4 +115,49 @@ export class MyToursComponent implements OnInit, OnDestroy {
 
     this.router.navigate(['/position-simulator'], { queryParams: { tourId: tour.id } });
   }
+  
+  getTransportationIcon(transportation: string | undefined): string {
+    switch (transportation) {
+      case 'Walking': return 'fa-solid fa-person-walking';
+      case 'Bicycle': return 'fa-solid fa-bicycle';
+      case 'Car': return 'fa-solid fa-car';
+      default: return '';
+    }
+  }
+
+  publishTour(tour: Tour): void {
+  if (!tour.id) return;
+  this.tourService.publishTour(tour.id).subscribe({
+    next: (updatedTour) => {
+      tour.status = updatedTour.status;
+    },
+    error: (err) => {
+      console.error('Error publishing tour:', err);
+      const message = err.error?.error || "Greška prilikom objavljivanja ture.";
+      alert(message);  
+    }
+  });
+}
+
+
+  archiveTour(tour: Tour): void {
+    if (!tour.id) return;
+    this.tourService.archiveTour(tour.id).subscribe({
+      next: (updatedTour) => {
+        tour.status = updatedTour.status;
+      },
+      error: (err) => console.error('Error archiving tour:', err)
+    });
+  }
+
+  unarchiveTour(tour: Tour): void {
+    if (!tour.id) return;
+    this.tourService.unarchiveTour(tour.id).subscribe({
+      next: (updatedTour) => {
+        tour.status = updatedTour.status;
+      },
+      error: (err) => console.error('Error unarchiving tour:', err)
+    });
+  }
+
 }

@@ -8,8 +8,10 @@ export interface Tour {
   description: string;
   difficulty: 'Easy' | 'Medium' | 'Hard';
   tags: string[];
-  status?: 'Draft' | 'Published';
+  status?: 'Draft' | 'Published' | 'Archived';
+  distance?: number;
+  duration?: number; 
+  transportation?: 'Walking' | 'Bicycle' | 'Car';
   price: number;
-
   keypoints?: Keypoint[];
 }
