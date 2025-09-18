@@ -21,6 +21,7 @@ export class TourMap implements OnInit, AfterViewInit, OnDestroy {
   isGuide = false;
   keypoints: Keypoint[] = [];
   isLoading = true;
+  isPurchased = true;
 
   private blueIcon = L.icon({
     iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
@@ -41,7 +42,9 @@ export class TourMap implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.tourId = this.route.snapshot.paramMap.get('tourId');
     this.roleSubscription = this.authService.role$.subscribe(role => {
-      this.isGuide = role === 'guide';
+    this.isGuide = role === 'guide';
+    const isPurchasedParam = this.route.snapshot.paramMap.get('isPurchased');
+    this.isPurchased = isPurchasedParam === 'true';
     });
   }
 
@@ -76,6 +79,11 @@ export class TourMap implements OnInit, AfterViewInit, OnDestroy {
           imagePath: kp.imagePath,
           tourId: kp.tourId
         }));
+
+         if (!this.isPurchased && this.keypoints.length > 0) {
+        this.keypoints = [this.keypoints[0]]; 
+      }
+
         this.drawKeypointsOnMap();
         this.isLoading = false;
       },
