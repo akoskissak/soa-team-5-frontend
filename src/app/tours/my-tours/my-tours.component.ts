@@ -88,4 +88,13 @@ export class MyToursComponent implements OnInit, OnDestroy {
 
     this.router.navigate(['/position-simulator'], { queryParams: { tourId: tour.id } });
   }
+  
+  getTransportationIcon(transportation: string | undefined): string {
+    switch (transportation) {
+      case 'Walking': return 'fa-solid fa-person-walking';
+      case 'Bicycle': return 'fa-solid fa-bicycle';
+      case 'Car': return 'fa-solid fa-car';
+      default: return '';
+    }
+  }
 }

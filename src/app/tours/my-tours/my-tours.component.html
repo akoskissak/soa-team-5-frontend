@@ -24,6 +24,17 @@
       </span>
     </div>
 
+     <div class="transportation-and-distance">
+          <span class="transportation">
+            <i [ngClass]="getTransportationIcon(tour.transportation)"></i>
+            {{ tour.transportation }}
+          </span>
+          <span class="distance">
+            <i class="fas fa-route"></i>
+            {{ tour.distance  | number : '1.0-2' }} km
+          </span>
+      </div>
+
     @if (tour.tags.length) {
     <div class="tags">
       @for (tag of tour.tags; track $index) {

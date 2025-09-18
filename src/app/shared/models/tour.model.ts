@@ -9,6 +9,8 @@ export interface Tour {
   tags: string[];
   status?: 'Draft' | 'Published';
   price?: number;
-
+  distance?: number;
+  duration?: number; 
+  transportation?: 'Walking' | 'Bicycle' | 'Car';
   keypoints?: Keypoint[];
 }
