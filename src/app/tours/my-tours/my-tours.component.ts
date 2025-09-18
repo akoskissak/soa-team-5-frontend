@@ -17,6 +17,7 @@ export class MyToursComponent implements OnInit, OnDestroy {
   isTourist = false;
   isGuide = false;
   private roleSubscription: Subscription | undefined;
+  errorMessage: string | null = null;
 
   constructor(private tourService: TourService,
     private authService: AuthService,
@@ -97,4 +98,40 @@ export class MyToursComponent implements OnInit, OnDestroy {
       default: return '';
     }
   }
+
+  publishTour(tour: Tour): void {
+  if (!tour.id) return;
+  this.tourService.publishTour(tour.id).subscribe({
+    next: (updatedTour) => {
+      tour.status = updatedTour.status;
+    },
+    error: (err) => {
+      console.error('Error publishing tour:', err);
+      const message = err.error?.error || "Greška prilikom objavljivanja ture.";
+      alert(message);  
+    }
+  });
+}
+
+
+  archiveTour(tour: Tour): void {
+    if (!tour.id) return;
+    this.tourService.archiveTour(tour.id).subscribe({
+      next: (updatedTour) => {
+        tour.status = updatedTour.status;
+      },
+      error: (err) => console.error('Error archiving tour:', err)
+    });
+  }
+
+  unarchiveTour(tour: Tour): void {
+    if (!tour.id) return;
+    this.tourService.unarchiveTour(tour.id).subscribe({
+      next: (updatedTour) => {
+        tour.status = updatedTour.status;
+      },
+      error: (err) => console.error('Error unarchiving tour:', err)
+    });
+  }
+
 }

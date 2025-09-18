@@ -7,7 +7,7 @@ export interface Tour {
   description: string;
   difficulty: 'Easy' | 'Medium' | 'Hard';
   tags: string[];
-  status?: 'Draft' | 'Published';
+  status?: 'Draft' | 'Published' | 'Archived';
   price?: number;
   distance?: number;
   duration?: number; 

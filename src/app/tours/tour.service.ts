@@ -54,4 +54,17 @@ export class TourService {
     return this.http.post<any>(`${this.apiUrl}/${tourId}/start`, {});
   }
 
+  public publishTour(tourId: string): Observable<Tour> {
+  return this.http.patch<Tour>(`${this.apiUrl}/${tourId}/publish`, {});
+  }
+
+  public archiveTour(tourId: string): Observable<Tour> {
+  return this.http.patch<Tour>(`${this.apiUrl}/${tourId}/archive`, {});
+  }
+
+  public unarchiveTour(tourId: string): Observable<Tour> {
+  return this.http.patch<Tour>(`${this.apiUrl}/${tourId}/unarchive`, {});
+  }
+
+
 }

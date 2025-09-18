@@ -1,6 +1,7 @@
 <h1 class="page-header">Tours</h1>
 
 <div class="grid">
+  
   @for (tour of tours; track $index) {
   <article class="card">
     <header class="card-header">
@@ -66,6 +67,21 @@
       <button class="action-button" [routerLink]="['/tours', tour.id, 'map']" title="Edit route">
         <i class="fas fa-pencil-alt"></i>
       </button>
+       @if (tour.status === 'Draft') {
+      <button class="action-button" (click)="publishTour(tour)" title="Publish">
+        <i class="fa-solid fa-upload"></i>
+      </button>
+    }
+    @if (tour.status === 'Published') {
+      <button class="action-button" (click)="archiveTour(tour)" title="Archive">
+        <i class="fa-solid fa-box-archive"></i>
+      </button>
+    }
+    @if (tour.status === 'Archived') {
+      <button class="action-button" (click)="unarchiveTour(tour)" title="Unarchive">
+        <i class="fa-solid fa-rotate-left"></i>
+      </button>
+    }
     </div>
     }
   </article>
