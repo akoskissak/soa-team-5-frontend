@@ -3,6 +3,8 @@ import { ReviewFormComponent } from './tours/review-form/review-form';
 import { ReviewsDisplay } from './tours/reviews-display/reviews-display';
 import { TourMap } from './tours/tour-map/tour-map';
 import { KeypointCreateComponent } from './tours/keypoint-create/keypoint-create.component';
+import { ShoppingCartComponent } from './purchase/shopping-cart/shopping-cart';
+import { PurchasedToursComponent } from './purchase/purchased-tours/purchased-tours';
 
 export const routes: Routes = [
   {
@@ -77,7 +79,18 @@ export const routes: Routes = [
         (m) => m.PositionSimulator
       )
   },
-  { path: 'tours/:tourId/map', component: TourMap },
+
+  {
+    path: 'shopping-cart', component: ShoppingCartComponent
+  },
+  {
+    path: 'purchased-tours', component: PurchasedToursComponent
+  },
+
+  { 
+  path: 'tours/:tourId/:isPurchased/map', 
+  component: TourMap 
+  },
   {
   path: 'tours/:tourId/keypoints/new',
   component: KeypointCreateComponent

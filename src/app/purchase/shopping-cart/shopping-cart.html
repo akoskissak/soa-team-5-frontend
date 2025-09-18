@@ -1,0 +1,30 @@
+<div class="shopping-cart-container" *ngIf="shoppingCart$ | async as cart">
+    <div class="cart-header">
+        <h1>Your Shopping Cart</h1>
+    </div>
+
+    <ng-container *ngIf="cart.items && cart.items.length > 0; else emptyCart">
+        <div class="cart-items">
+            <div class="cart-item" *ngFor="let item of cart.items">
+                <div class="item-info">
+                    <span class="item-name">{{ item.tour_name }}</span>
+                    <span class="item-price">{{ item.price | currency:'$ ' }}</span>
+                </div>
+                <button class="remove-btn" (click)="removeItem(item.tour_id)">Remove</button>
+            </div>
+        </div>
+
+        <div class="cart-summary">
+            <span class="total-label">Total:</span>
+            <span class="total-price">{{ cart.total_price | currency:'$ ' }}</span>
+        </div>
+
+        <button color="primary" class="checkout-btn" (click)="checkout()">Checkout</button>
+    </ng-container>
+
+    <ng-template #emptyCart>
+        <div class="empty-cart-message">
+            Your cart is empty.
+        </div>
+    </ng-template>
+</div>

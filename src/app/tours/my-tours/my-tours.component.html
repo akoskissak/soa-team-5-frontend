@@ -34,20 +34,28 @@
 
   @if (isTourist) {
   <div class="actions">
-    <button class="action-button" [routerLink]="['/tours', tour.id, 'review']" title="Leave a review">
+    <button class="action-button" [routerLink]="['/tours', tour.ID, 'review']" title="Leave a review">
       <i class="fas fa-star"></i>
     </button>
-    <button class="action-button" [routerLink]="['/tours', tour.id, 'map']" title="View route">
+     <button class="action-button" [routerLink]="['/tours', tour.ID, 'reviews']" title="See reviews">
+      <i class="fas fa-comments"></i>
+    </button>
+    <button class="action-button" [routerLink]="['/tours', tour.ID, isTourPurchased(tour), 'map']" title="View route">
       <i class="fas fa-map"></i>
     </button>
+     @if (!isTourPurchased(tour)) {
+      <button class="action-button add-to-cart" (click)="addToCart(tour)" title="Add to Cart">
+        <i class="fas fa-shopping-cart"></i>
+      </button>
+    }
   </div>
 }
 @if (isGuide) {
   <div class="actions">
-    <button class="action-button" [routerLink]="['/tours', tour.id, 'reviews']" title="See reviews">
+    <button class="action-button" [routerLink]="['/tours', tour.ID, 'reviews']" title="See reviews">
       <i class="fas fa-comments"></i>
     </button>
-    <button class="action-button" [routerLink]="['/tours', tour.id, 'map']" title="Edit route">
+    <button class="action-button" [routerLink]="['/tours', tour.ID, 'map']" title="Edit route">
       <i class="fas fa-pencil-alt"></i>
     </button>
   </div>

@@ -1,0 +1,34 @@
+<div class="purchased-tours-container" *ngIf="!isLoading; else loading">
+
+  <div class="header">
+    <h1>Your Purchased Tours</h1>
+  </div>
+
+  <ng-container *ngIf="!isEmpty; else noPurchases">
+    <div class="tours-list" *ngIf="purchasedTours$ | async as tours">
+      <div class="tour-item" *ngFor="let tour of tours">
+        <div class="tour-details">
+          <span class="tour-name">{{ tour.tour_name }}</span>
+          <span class="tour-price">{{ tour.price | currency:'$ ' }}</span>
+        </div>
+        <div class="tour-token">
+          <span class="token-label">Purchase Token:</span>
+          <span class="token-value">{{ tour.token }}</span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+</div>
+
+<ng-template #noPurchases>
+  <div class="empty-message">
+    You haven't purchased any tours yet.
+  </div>
+</ng-template>
+
+<ng-template #loading>
+  <div class="empty-message">
+    Loading purchased tours...
+  </div>
+</ng-template>
