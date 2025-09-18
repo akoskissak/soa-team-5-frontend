@@ -32,7 +32,7 @@
     </div>
     }
 
-  @if (isTourist) {
+@if (isTourist) {
   <div class="actions">
     <button class="action-button" [routerLink]="['/tours', tour.ID, 'review']" title="Leave a review">
       <i class="fas fa-star"></i>
@@ -50,6 +50,7 @@
     }
   </div>
 }
+
 @if (isGuide) {
   <div class="actions">
     <button class="action-button" [routerLink]="['/tours', tour.ID, 'reviews']" title="See reviews">

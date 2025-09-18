@@ -106,4 +106,12 @@ export class MyToursComponent implements OnInit, OnDestroy {
       }
     });
   }
+  
+  startTourExecution(tour: Tour) {
+    if (!tour.id) {
+      return;
+    }
+
+    this.router.navigate(['/position-simulator'], { queryParams: { tourId: tour.id } });
+  }
 }
