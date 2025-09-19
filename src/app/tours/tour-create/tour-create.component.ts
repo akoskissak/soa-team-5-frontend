@@ -19,6 +19,7 @@ export class TourCreateComponent {
   name: string = '';
   description: string = '';
   difficulty: 'Easy' | 'Medium' | 'Hard' = 'Easy';
+  transportation: 'Walking' | 'Bicycle' | 'Car' = 'Car';
   tags: string[] = [];
   newTag: string = '';
   keypoints: Keypoint[] = [];
@@ -52,6 +53,7 @@ export class TourCreateComponent {
     formData.append("name", this.name);
     formData.append("description", this.description);
     formData.append("difficulty", this.difficulty);
+    formData.append("transportation", this.transportation);
     formData.append("tags", JSON.stringify(this.tags));
     formData.append("keypoints", JSON.stringify(this.keypoints.map((kp, i) => ({
       name: kp.name,
@@ -91,6 +93,7 @@ export class TourCreateComponent {
     this.name = '';
     this.description = '';
     this.difficulty = 'Easy';
+    this.transportation = 'Car';
     this.tags = [];
     this.newTag = '';
     this.keypoints.forEach(kp => {

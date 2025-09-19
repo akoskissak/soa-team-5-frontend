@@ -3,8 +3,9 @@ import { Tour } from '../../shared/models/tour.model';
 import { TourService } from '../tour.service';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/auth/auth.service';
-import { Subscription } from 'rxjs';
-import { Router, RouterModule } from '@angular/router';
+import { catchError, forkJoin, of, Subscription } from 'rxjs';
+import { Route, Router, RouterModule } from '@angular/router';
+import { PurchaseService } from '../../purchase/purchase.service';
 
 @Component({
   selector: 'app-my-tours.component',
@@ -17,10 +18,10 @@ export class MyToursComponent implements OnInit, OnDestroy {
   isTourist = false;
   isGuide = false;
   private roleSubscription: Subscription | undefined;
+  errorMessage: string | null = null;
+  purchasedTourIds = new Set<string>(); 
 
-  constructor(private tourService: TourService,
-    private authService: AuthService,
-    private router: Router) { }
+  constructor(private tourService: TourService, private authService: AuthService, private purchaseService: PurchaseService, private router: Router) {}
 
   ngOnInit(): void {
     this.roleSubscription = this.authService.role$.subscribe((role) => {
@@ -38,31 +39,43 @@ export class MyToursComponent implements OnInit, OnDestroy {
     if (role === 'guide') {
       this.tourService.getAllTours().subscribe({
         next: (data: any[]) => {
-          this.tours = data.map(tour => ({
-            ...tour,
-            id: tour.ID
-          }));
+          this.tours = data.map(tour => ({ ...tour, id: tour.ID }));
         },
-        error: (err: any) => {
-          console.error(err);
-        }
+        error: (err: any) => console.error(err)
       });
     } else if (role === 'tourist') {
-      this.tourService.getAllPublishedTours().subscribe({
-        next: (data: any[]) => {
-          this.tours = data.map(tour => ({
-            ...tour,
-            id: tour.ID
-          }));
+      const touristId = this.authService.getUserId();
+      if (!touristId) {
+        this.tours = [];
+        return;
+      }
+
+      forkJoin({
+        allTours: this.tourService.getAllPublishedTours(),
+        purchasedTours: this.purchaseService.getPurchasedTours(touristId).pipe(
+          catchError(() => of([])) 
+        )
+      }).subscribe({
+        next: ({ allTours, purchasedTours }) => {
+          const purchasedIds = purchasedTours.map(p => p.tour_id);
+          this.purchasedTourIds = new Set<string>(purchasedIds);
+          this.tours = allTours.map(tour => ({ ...tour, id: tour.ID }));
         },
         error: (err: any) => {
-          console.error(err);
+          console.error("Failed to fetch tours data:", err);
+          this.tours = [];
         }
       });
+
     } else {
       this.tours = [];
     }
   }
+
+  isTourPurchased(tour: Tour): boolean {
+    return this.purchasedTourIds.has(tour.ID);
+  }
+
 
   statusClass(status: Tour['status']) {
     return {
@@ -81,6 +94,20 @@ export class MyToursComponent implements OnInit, OnDestroy {
     };
   }
 
+   addToCart(tour: Tour): void {
+    this.purchaseService.addToCart(tour).subscribe({
+      next: (response) => {
+        console.log('Tour added to cart:', response);
+        alert('Tura uspešno dodata u korpu!');
+         this.router.navigate(['/shopping-cart']);
+      },
+      error: (err) => {
+        console.error('Failed to add tour to cart:', err);
+        alert('Greška prilikom dodavanja ture u korpu.');
+      }
+    });
+  }
+  
   startTourExecution(tour: Tour) {
     if (!tour.id) {
       return;
@@ -88,4 +115,49 @@ export class MyToursComponent implements OnInit, OnDestroy {
 
     this.router.navigate(['/position-simulator'], { queryParams: { tourId: tour.id } });
   }
+  
+  getTransportationIcon(transportation: string | undefined): string {
+    switch (transportation) {
+      case 'Walking': return 'fa-solid fa-person-walking';
+      case 'Bicycle': return 'fa-solid fa-bicycle';
+      case 'Car': return 'fa-solid fa-car';
+      default: return '';
+    }
+  }
+
+  publishTour(tour: Tour): void {
+  if (!tour.id) return;
+  this.tourService.publishTour(tour.id).subscribe({
+    next: (updatedTour) => {
+      tour.status = updatedTour.status;
+    },
+    error: (err) => {
+      console.error('Error publishing tour:', err);
+      const message = err.error?.error || "Greška prilikom objavljivanja ture.";
+      alert(message);  
+    }
+  });
+}
+
+
+  archiveTour(tour: Tour): void {
+    if (!tour.id) return;
+    this.tourService.archiveTour(tour.id).subscribe({
+      next: (updatedTour) => {
+        tour.status = updatedTour.status;
+      },
+      error: (err) => console.error('Error archiving tour:', err)
+    });
+  }
+
+  unarchiveTour(tour: Tour): void {
+    if (!tour.id) return;
+    this.tourService.unarchiveTour(tour.id).subscribe({
+      next: (updatedTour) => {
+        tour.status = updatedTour.status;
+      },
+      error: (err) => console.error('Error unarchiving tour:', err)
+    });
+  }
+
 }

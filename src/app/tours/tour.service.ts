@@ -94,4 +94,16 @@ export class TourService {
       { status: 'abandoned' }
     );
   }
+
+  public publishTour(tourId: string): Observable<Tour> {
+    return this.http.patch<Tour>(`${this.apiUrl}/${tourId}/publish`, {});
+  }
+
+  public archiveTour(tourId: string): Observable<Tour> {
+    return this.http.patch<Tour>(`${this.apiUrl}/${tourId}/archive`, {});
+  }
+
+  public unarchiveTour(tourId: string): Observable<Tour> {
+    return this.http.patch<Tour>(`${this.apiUrl}/${tourId}/unarchive`, {});
+  }
 }

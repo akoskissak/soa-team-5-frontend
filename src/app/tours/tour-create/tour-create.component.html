@@ -16,6 +16,13 @@
           <option [value]="'Medium'">Medium</option>
           <option [value]="'Hard'">Hard</option>
         </select>
+
+        <label for="transportation">Transportation</label>
+        <select id="transportation" [(ngModel)]="transportation" name="transportation" required>
+          <option [value]="'Walking'">Walking</option>
+          <option [value]="'Bicycle'">Bicycle</option>
+          <option [value]="'Car'">Car</option>
+        </select>
     
         <label for="tagInput">Tags</label>
         <div style="display:flex; gap:10px; align-items:center;">
