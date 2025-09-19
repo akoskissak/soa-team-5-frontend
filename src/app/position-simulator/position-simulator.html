@@ -1,31 +1,50 @@
 <html>
-
-<head>
+  <head>
     <title>Position Simulator</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        #map {
-            height: 600px;
-        }
+      #map {
+        height: 600px;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <h1>Tourist Position Simulator</h1>
     <div id="map" title="Karta za odabir pozicije"></div>
     <div class="location-info">
-        <p>Current possition: <span id="current-location">{{ currentLocation }}</span></p>
-        <p>Address: <span id="current-address">{{ currentAddress }}</span></p>
+      <p>
+        Current possition:
+        <span id="current-location">{{ currentLocation }}</span>
+      </p>
+      <p>
+        Address: <span id="current-address">{{ currentAddress }}</span>
+      </p>
     </div>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="simulator.js"></script>
 
     @if (tourStarted) {
-    <h2>Tour execution started</h2>
+    <h2>Tour execution ongoing</h2>
+    <button class="btn-abandon-tour-execution" (click)="abandonTourExecution()">
+      Abandon tour execution
+    </button>
     } @else if (tourId) {
-    <button class="btn-start-tour-execution" (click)="startTourExecution()">Start tour execution</button>
+    <button class="btn-start-tour-execution" (click)="startTourExecution()">
+      Start tour execution
+    </button>
     }
-</body>
 
+    <div class="created-modal" [ngClass]="{ show: isModalOpen }">
+      <div class="created-modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <div class="modal-body">
+          <img src="images/success.png" alt="Success" />
+          <p>You successfully completed the tour 🎉</p>
+          <button class="btn" (click)="closeModal()">Continue</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="simulator.js"></script>
+  </body>
 </html>

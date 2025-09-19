@@ -7,4 +7,5 @@ export interface Keypoint {
   longitude: number;
   image?: File | null;
   imagePath?: string;
+  completed?: boolean;
 }
