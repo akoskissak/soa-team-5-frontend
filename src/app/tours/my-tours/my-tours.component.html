@@ -1,7 +1,6 @@
 <h1 class="page-header">Tours</h1>
 
 <div class="grid">
-  
   @for (tour of tours; track $index) {
   <article class="card">
     <header class="card-header">
@@ -21,20 +20,20 @@
       </span>
 
       <span class="price" [class.free]="tour.price === 0">
-        {{ tour.price === 0 ? '0' : (tour.price | number : '1.0-2') }} RSD
+        {{ tour.price === 0 ? "0" : (tour.price | number : "1.0-2") }} RSD
       </span>
     </div>
 
-     <div class="transportation-and-distance">
-          <span class="transportation">
-            <i [ngClass]="getTransportationIcon(tour.transportation)"></i>
-            {{ tour.transportation }}
-          </span>
-          <span class="distance">
-            <i class="fas fa-route"></i>
-            {{ tour.distance  | number : '1.0-2' }} km
-          </span>
-      </div>
+    <div class="transportation-and-distance">
+      <span class="transportation">
+        <i [ngClass]="getTransportationIcon(tour.transportation)"></i>
+        {{ tour.transportation }}
+      </span>
+      <span class="distance">
+        <i class="fas fa-route"></i>
+        {{ tour.distance | number : "1.0-2" }} km
+      </span>
+    </div>
 
     @if (tour.tags.length) {
     <div class="tags">
@@ -42,52 +41,79 @@
       <span class="tag">#{{ tag }}</span>
       }
     </div>
-    }
-
-@if (isTourist) {
-  <div class="actions">
-    <button class="action-button" [routerLink]="['/tours', tour.ID, 'review']" title="Leave a review">
-      <i class="fas fa-star"></i>
-    </button>
-     <button class="action-button" [routerLink]="['/tours', tour.ID, 'reviews']" title="See reviews">
-      <i class="fas fa-comments"></i>
-    </button>
-    <button class="action-button" [routerLink]="['/tours', tour.ID, isTourPurchased(tour), 'map']" title="View route">
-      <i class="fas fa-map"></i>
-    </button>
-     @if (!isTourPurchased(tour)) {
-      <button class="action-button add-to-cart" (click)="addToCart(tour)" title="Add to Cart">
-        <i class="fas fa-shopping-cart"></i>
-      </button>
-    }
-
-    @if (isGuide) {
+    } @if (isTourist) {
     <div class="actions">
-      <button class="action-button" [routerLink]="['/tours', tour.ID, 'reviews']" title="See reviews">
+      <div>
+        <button class="action-button" (click)="startTourExecution(tour)">
+          <i class="fa-solid fa-play" title="Start"></i>
+        </button>
+      </div>
+      <button
+        class="action-button"
+        [routerLink]="['/tours', tour.ID, 'review']"
+        title="Leave a review"
+      >
+        <i class="fas fa-star"></i>
+      </button>
+      <button
+        class="action-button"
+        [routerLink]="['/tours', tour.ID, 'reviews']"
+        title="See reviews"
+      >
         <i class="fas fa-comments"></i>
       </button>
-      <button class="action-button" [routerLink]="['/tours', tour.ID, 'map']" title="Edit route">
+      <button
+        class="action-button"
+        [routerLink]="['/tours', tour.ID, isTourPurchased(tour), 'map']"
+        title="View route"
+      >
+        <i class="fas fa-map"></i>
+      </button>
+      @if (!isTourPurchased(tour)) {
+      <button
+        class="action-button add-to-cart"
+        (click)="addToCart(tour)"
+        title="Add to Cart"
+      >
+        <i class="fas fa-shopping-cart"></i>
+      </button>
+      }
+    </div>
+    } @if (isGuide) {
+    <div class="actions">
+      <button
+        class="action-button"
+        [routerLink]="['/tours', tour.ID, 'reviews']"
+        title="See reviews"
+      >
+        <i class="fas fa-comments"></i>
+      </button>
+      <button
+        class="action-button"
+        [routerLink]="['/tours', tour.ID, 'map']"
+        title="Edit route"
+      >
         <i class="fas fa-pencil-alt"></i>
       </button>
-       @if (tour.status === 'Draft') {
+      @if (tour.status === 'Draft') {
       <button class="action-button" (click)="publishTour(tour)" title="Publish">
         <i class="fa-solid fa-upload"></i>
       </button>
-    }
-    @if (tour.status === 'Published') {
+      } @if (tour.status === 'Published') {
       <button class="action-button" (click)="archiveTour(tour)" title="Archive">
         <i class="fa-solid fa-box-archive"></i>
       </button>
-    }
-    @if (tour.status === 'Archived') {
-      <button class="action-button" (click)="unarchiveTour(tour)" title="Unarchive">
+      } @if (tour.status === 'Archived') {
+      <button
+        class="action-button"
+        (click)="unarchiveTour(tour)"
+        title="Unarchive"
+      >
         <i class="fa-solid fa-rotate-left"></i>
       </button>
-    }
+      }
     </div>
     }
   </article>
-
-}
-
+  }
 </div>
