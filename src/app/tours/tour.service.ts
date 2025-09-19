@@ -4,16 +4,18 @@ import { map, Observable } from 'rxjs';
 import { Tour } from '../shared/models/tour.model';
 import { Review } from '../shared/models/review.model';
 import { Keypoint } from '../shared/models/keypoint.model';
+import { TourExecution } from '../shared/models/tourExecution';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TourService {
-  private apiUrl = 'http://localhost:8080/api/tours'
+  private apiUrl = 'http://localhost:8080/api/tours';
+  private tourExecutionsApiUrl = 'http://localhost:8080/api/tour-executions';
   private reviewApiUrl = 'http://localhost:8080/api/reviews';
   private keypointApiUrl = 'http://localhost:8080/api/keypoints';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   public createTour(data: FormData): Observable<Tour> {
     return this.http.post<Tour>(this.apiUrl, data);
@@ -39,19 +41,57 @@ export class TourService {
     return this.http.post<Keypoint>(this.keypointApiUrl, keypoint);
   }
 
-  public updateKeypoint(keypointId: string, keypointData: Partial<Keypoint>): Observable<Keypoint> {
-    return this.http.put<Keypoint>(`${this.keypointApiUrl}/${keypointId}`, keypointData);
+  public updateKeypoint(
+    keypointId: string,
+    keypointData: Partial<Keypoint>
+  ): Observable<Keypoint> {
+    return this.http.put<Keypoint>(
+      `${this.keypointApiUrl}/${keypointId}`,
+      keypointData
+    );
   }
 
   public deleteKeypoint(keypointId: string): Observable<any> {
     return this.http.delete<any>(`${this.keypointApiUrl}/${keypointId}`);
   }
-  public updateKeypointWithFormData(keypointId: string, formData: FormData): Observable<Keypoint> {
-    return this.http.put<Keypoint>(`${this.keypointApiUrl}/${keypointId}`, formData);
+  public updateKeypointWithFormData(
+    keypointId: string,
+    formData: FormData
+  ): Observable<Keypoint> {
+    return this.http.put<Keypoint>(
+      `${this.keypointApiUrl}/${keypointId}`,
+      formData
+    );
   }
 
   public startTourExecution(tourId: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/${tourId}/start`, {});
   }
 
+  getActiveTourExecution(): Observable<TourExecution | null> {
+    return this.http.get<TourExecution | null>(
+      `${this.tourExecutionsApiUrl}/active`
+    );
+  }
+
+  checkTourLocation(
+    executionId: string,
+    latitude: number,
+    longitude: number
+  ): Observable<any> {
+    return this.http.post<any>(
+      `${this.tourExecutionsApiUrl}/${executionId}/check-location`,
+      {
+        latitude,
+        longitude,
+      }
+    );
+  }
+
+  abandonTourExecution(executionId: string): Observable<any> {
+    return this.http.patch(
+      `${this.tourExecutionsApiUrl}/${executionId}/status`,
+      { status: 'abandoned' }
+    );
+  }
 }
