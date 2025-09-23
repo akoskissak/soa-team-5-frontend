@@ -191,43 +191,34 @@ export class KeypointCreateComponent implements OnInit, AfterViewInit {
     if (this.isEditMode) {
       this.updateKeypoint();
     } else {
-      // IZMENJENO: Provjeri da li je tourId postavljen
       if (this.tourId) {
-        // Postojeći tour - stvarno kreiraj keypoint preko API-ja
         this.createNewKeypoint(fileInput);
       } else {
-        // Kreiranje nove ture - dodaj u privremeni array
         this.addToTourCreation(fileInput);
       }
     }
   }
 
-  // NOVO: Dodaj keypoint tokom kreiranja ture
   private addToTourCreation(fileInput: HTMLInputElement): void {
     if (!this.kpImage) {
       alert("Image is required");
       return;
     }
 
-    // Kreiraj privremeni keypoint objekat
     const newKeypoint: Keypoint = {
       name: this.kpName,
       description: this.kpDescription,
       latitude: this.selectedLatLng!.lat,
       longitude: this.selectedLatLng!.lng,
-      image: this.kpImage // Privremeno čuvaj file objekat
+      image: this.kpImage 
     };
 
-    // Dodaj u keypoints array
     this.keypoints.push(newKeypoint);
     
-    // Emituj event za parent komponentu
     this.keypointAdded.emit(newKeypoint);
 
-    // Dodaj marker na mapu
     this.addKeypointMarker(newKeypoint);
 
-    // Resetuj formu
     this.resetForm(fileInput);
     
     console.log('Keypoint added to tour creation:', newKeypoint);
@@ -250,7 +241,8 @@ export class KeypointCreateComponent implements OnInit, AfterViewInit {
     this.tourService.createKeypoint(formData).subscribe(
       (newKeypoint: Keypoint) => {
         alert('Keypoint created successfully!');
-        this.router.navigate(['/tours', this.tourId, 'map']);
+        const isPurchased = true;
+        this.router.navigate(['/tours', this.tourId, isPurchased, 'map']);
       },
       (error) => {
         console.error('Failed to create keypoint:', error);
