@@ -73,8 +73,12 @@ export class ShoppingCartComponent implements OnInit {
       this.purchaseService.checkout(this.touristId).subscribe({
         next: (tokens) => {
           console.log('Checkout successful! Tokens:', tokens);
-          alert('Uspešno ste kupili ture!');
-          this.router.navigate(['/purchased-tours']); 
+          if (tokens.length > 0) {
+            alert('Uspešno ste kupili ture!');
+            this.router.navigate(['/purchased-tours']); 
+          } else {
+            alert('Neuspesna kupovina!');
+          }
         },
         error: (err) => {
           console.error('Checkout failed:', err);
